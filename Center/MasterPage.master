@@ -1,0 +1,86 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<style type="text/css">
+</style>
+<link id="Login_css" rel="stylesheet" href="MasterPage.css" type="text/css" />
+    <title>陸軍官校鑑測站</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background-color:#d1dbe0">
+    <form id="form1" runat="server">
+    <center>
+    <div style="height: 100%;width:1024px" > 
+        <div style="height: 100%; left: auto; float: left; width: 5%;">
+        </div>
+<div style="height: 768px; left: auto; float: left; width: 100%; margin-right: 0px; ">
+    <div align="left" style="height: 18px; font-size: 12px; background-color:#d1dbe0;">
+        &nbsp;
+        <a href="index.aspx" style="color:#0000FF">: : : 回首頁</a> | <input id="querynonhandle" type="button" value="鑑測成績未處理統計" onclick="window.open('QueryNonHandle.aspx', '', 'left=100,top=0,toolbar=no,width=500,height=210,resizable=yes');"/>
+        <asp:HiddenField ID="loginType" runat="server" />             
+        <asp:Label ID="user" runat="server" Text="Label"></asp:Label>
+        <asp:HyperLink ID="logout" runat="server" NavigateUrl="~/Logout.aspx" Text="登出" ForeColor="Blue"></asp:HyperLink> 
+        </div>
+        <div align="left" 
+        style="background-image: url('images/top_pic_center_9.jpg'); background-repeat:no-repeat; height: 136px;background-position:center; width: 100%">
+            
+            </div>
+        <%-- User Site Map & Login Status Block--%>
+        <div align="left" style=" border-width:thin; height:23px; border-color:#16387c">
+        <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal"
+                DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Overline="False" 
+                Font-Size="16px" Font-Underline="True" ForeColor="#284E98" 
+                StaticSubMenuIndent="10px">
+            <StaticSelectedStyle BackColor="#507CD1" />
+            <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
+            <DynamicMenuStyle BackColor="#B5C7DE" />
+            <DynamicSelectedStyle BackColor="#507CD1" />
+            <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
+            </asp:Menu>  
+            <asp:Menu ID="Menu2" runat="server" Orientation="Horizontal"
+                DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Overline="False" 
+                Font-Size="16px" Font-Underline="True" ForeColor="#284E98" 
+                StaticSubMenuIndent="10px">
+            <StaticSelectedStyle BackColor="#507CD1" />
+            <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
+            <DynamicMenuStyle BackColor="#B5C7DE" />
+            <DynamicSelectedStyle BackColor="#507CD1" />
+            <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
+            </asp:Menu>                          
+        </div>
+    <br /><br />
+            <%--manu block--%>
+           <%-- <div align="left" 
+        style="height: 576px; font-size: 12px; float:left; background-image: url('images/left_bg.jpg'); width: 150px; font-family: 微軟正黑體; font-size: 20px">
+                    
+                
+    </div>--%>
+    <%--Main Page Content--%>
+    <div align="left"   
+        style="height: 576px; font-size: 12px; float:left; width: 100%;">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    <%--right block--%>
+<%--    <div align="left" 
+        
+        style="height: 576px; font-size: 12px; float:right; width: 190px; ">
+
+    </div>--%>
+    <%--footer--%>  
+        </div>
+
+    </div> 
+    </center>
+    </form>
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkin", "Checkin.csproj", "{9401E9B8-A64B-4BFD-9445-08E4AEBDDDCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9401E9B8-A64B-4BFD-9445-08E4AEBDDDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9401E9B8-A64B-4BFD-9445-08E4AEBDDDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9401E9B8-A64B-4BFD-9445-08E4AEBDDDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9401E9B8-A64B-4BFD-9445-08E4AEBDDDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

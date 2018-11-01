@@ -1,0 +1,71 @@
+﻿body 
+{
+     
+}
+.content_div
+{
+    width:1024px; height:220px; float:inherit
+    }
+.head_back_index
+{
+    width: 1024px;height:20px; float:inherit; text-align:left; font-size: 12px
+    }
+.head_div
+{
+    width: 1024px;height:20px; float:inherit; text-align:left; font-size: 12px
+    }
+.head_space_div
+{
+    width: 1024px;height: 136px; float:inherit; background-repeat:no-repeat; background-image: url('images/top_pic_center_9.jpg')        
+        }
+.content_left_div
+{
+    width: 380px;height: 160px; border:1px solid #C0C0C0; float:none
+    }
+.content_left_top
+{
+    width: 100%; height: 20px ; border-style: none none solid none; border-width: 1px; border-color: #C0C0C0 ; font-family: 微軟正黑體; font-size: 14px; font-weight: bold; text-align:left
+    }    
+.content_left_bottom
+{
+    width: 100%; height: 140px 
+    }  
+    
+    
+.content_center_div
+{
+    width: 20px;height: 200px; float:left
+    }
+    
+.content_right_div
+{
+    width: 380px;height: 200px; border:1px solid #C0C0C0 ;float:right
+    }
+.content_right_top
+{
+    width: 100%; height: 20px ; border-style: none none solid none; border-width: 1px; border-color: #C0C0C0  ;font-family: 微軟正黑體; font-size: 14px; font-weight: bold; text-align:left
+    }
+.content_right_bottom
+{
+    width: 100%; height: 180px
+    }
+.td_left
+{
+    width: 140px; height: 20px; font-family: 微軟正黑體; font-size: 14px; font-weight: bold; text-align:right
+    }
+.td_right
+{
+    width: 240px; height:20px; text-align:left
+    }
+.td_space_left
+{
+    width: 140px; height:10px
+    }
+.td_space_right
+{
+    width: 240px; height:10px
+    }
+.td_right_registry
+{
+    width: 380px; height:20px; font-family: 微軟正黑體; font-size: 14px;text-align:left
+    }
