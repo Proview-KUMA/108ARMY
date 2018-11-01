@@ -360,6 +360,14 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="soldier.ico" />
+    <Content Include="SP\[Ex106_CalResultByLFTag].sql" />
+    <Content Include="SP\[Ex108_CalResultByCloNum].sql" />
+    <Content Include="SP\[Ex108_CalResultByID].sql" />
+    <Content Include="SP\[Ex108_CalResultByLFTag].sql" />
+    <Content Include="SP\[Ex108_GetResultYear].sql" />
+    <Content Include="SP\[Ex108_Get_PassRate_Chart].sql" />
+    <Content Include="SP\[Ex108_Get_RealTest_Chart].sql" />
+    <Content Include="SP\[Ex108_Get_StandartReplace_Chart].sql" />
     <Content Include="System.txt" />
     <Content Include="UpdateItem\CertPrint.exe" />
     <None Include="Service References\AWS_WS\WebService2.wsdl" />
