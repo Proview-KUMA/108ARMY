@@ -98,6 +98,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_Change_3K = new System.Windows.Forms.Button();
+            this.基本資料補正ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -123,7 +124,8 @@
             this.重置程式ToolStripMenuItem,
             this.成績結算ToolStripMenuItem,
             this.即時數據檢視ToolStripMenuItem,
-            this.數據查詢ToolStripMenuItem});
+            this.數據查詢ToolStripMenuItem,
+            this.基本資料補正ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1092, 24);
@@ -851,6 +853,13 @@
             this.btn_Change_3K.UseVisualStyleBackColor = true;
             this.btn_Change_3K.Click += new System.EventHandler(this.btn_Change_3K_Click);
             // 
+            // 基本資料補正ToolStripMenuItem
+            // 
+            this.基本資料補正ToolStripMenuItem.Name = "基本資料補正ToolStripMenuItem";
+            this.基本資料補正ToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.基本資料補正ToolStripMenuItem.Text = "基本資料補正";
+            this.基本資料補正ToolStripMenuItem.Click += new System.EventHandler(this.基本資料補正ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -968,6 +977,7 @@
         private System.Windows.Forms.Button btn_Change_3K;
         private System.Windows.Forms.ToolStripMenuItem 即時數據檢視ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 數據查詢ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 基本資料補正ToolStripMenuItem;
     }
 }
 

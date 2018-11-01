@@ -75,7 +75,7 @@ public class GetValueByCode : IHttpHandler
                         d.Add("status", "true");
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
-                    break;    
+                    break;
 
                 case "playerExist":
                     dt = du.getDataTableBysp("CheckPlaExist", "id", value);
@@ -89,7 +89,7 @@ public class GetValueByCode : IHttpHandler
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
-                    
+
                 case "QueryplayerExist"://人工鑑測成績輸入：查詢人員基本資料
                     try
                     {
@@ -125,13 +125,13 @@ public class GetValueByCode : IHttpHandler
                     }
                     break;
                 case "GetSitUpsItem":
-                     dt = du.getDataTableBysp("Ex104_GetRepMentByScoreTrail", "Gender", value);
-                     foreach (DataRow dr in dt.Rows)
-                     {
-                         d.Add(dr[0].ToString(), dr[1].ToString());
-                     }
-                     json = Lib.SysSetting.GetJsonFormatData(dt);
-                    break;    
+                    dt = du.getDataTableBysp("Ex104_GetRepMentByScoreTrail", "Gender", value);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        d.Add(dr[0].ToString(), dr[1].ToString());
+                    }
+                    json = Lib.SysSetting.GetJsonFormatData(dt);
+                    break;
                 case "GetItemUnit":
                     dt = du.getDataTableBysp("Ex104_GetRepMentNote", "sid", value);
                     if (dt.Rows.Count == 0)
@@ -142,7 +142,7 @@ public class GetValueByCode : IHttpHandler
                     {
                         d.Add("status", dt.Rows[0][0].ToString());
                     }
-                    
+
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
                 case "InsertScore":
@@ -170,6 +170,20 @@ public class GetValueByCode : IHttpHandler
                             paralist.Clear();
                             paralist.Add("id", context.Request.Params["id"]);
                             paralist.Add("date", context.Request.Params["date"]);
+
+                            DateTime Change_time = new DateTime(2018, 12, 31, 23, 59, 59);//檢查時間 2018年12月31日
+                            DateTime Now_time = Convert.ToDateTime(context.Request.Params["date"].ToString());
+                            if (Now_time > Change_time)//如果時間大於設定時間
+                            {
+                                //新版-2019年1月1日開始啟用之成績結算sp
+                                du.executeNonQueryBysp("Ex108_CalResultByID", paralist);
+                            }
+                            else
+                            {
+                                //舊版2017年之前用
+                                du.executeNonQueryBysp("Ex106_CalResultByID", paralist);
+                            }
+
                             du.executeNonQueryBysp("Ex106_CalResultByID", paralist);
                             d.Add("status", "OK");
                         }
@@ -177,15 +191,15 @@ public class GetValueByCode : IHttpHandler
                         {
                             d.Add("status", ex.Message);
                         }
-                        
+
                     }
                     else
                     {
                         d.Add("status", "[鑑測站]當日已有一筆鑑測資料");
-                    }                    
+                    }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
-                                         
+
                 case "unit":
                     dt = du.getDataTableBysp("GetUnitName", "unit_code", value);
 
@@ -193,7 +207,7 @@ public class GetValueByCode : IHttpHandler
 
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
-                    
+
                 case "parent_unit":
                     bool isFind = false;
                     DataTable _dt = du.getDataTableByText("select service_code from Unit where unit_code = @unit_code", "unit_code", value);
@@ -204,7 +218,7 @@ public class GetValueByCode : IHttpHandler
                         {
                             if (_dt.Rows[0]["service_code"].ToString() == row["service_code"].ToString())
                             {
-                                isFind = true; 
+                                isFind = true;
                             }
                         }
                     }
@@ -219,7 +233,7 @@ public class GetValueByCode : IHttpHandler
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
-                    
+
                 case "centerLimit":
                     d.Add("center_code", context.Request.Params["center_code"]);
                     string _v = context.Request.Params["date"];
@@ -240,7 +254,7 @@ public class GetValueByCode : IHttpHandler
                     //json = _date;
                     json = "{\"status\":\"" + dt.Rows[0][0].ToString() + "\"}";
                     break;
-                
+
                 case "replaceitem":
                     try
                     {
@@ -266,10 +280,10 @@ public class GetValueByCode : IHttpHandler
                     }
                     catch(Exception ex)
                     {
-                        
+
                     }
                     break;
-                    
+
                 case "player" :
                     d.Add("id", value);
                     dt = du.getDataTableByText("select id from player where id = @id", d);
@@ -282,20 +296,20 @@ public class GetValueByCode : IHttpHandler
                         json = "{\"status\":\"false\"}";
                     }
                     break;
-                    
+
                 case "iprenew":
                     try
                     {
                         du.executeNonQueryBysp("iprenew", "apply", value);
                         json = "{\"status\":\"done\"}";
-                        
+
                     }
                     catch (Exception ex)
                     {
                         json = "{\"status\":\"" + ex.Message + "\"}";
                     }
                     break;
-                    
+
                 case "deletesch":
                     try
                     {
@@ -320,9 +334,9 @@ public class GetValueByCode : IHttpHandler
                     {
                         json = "{\"status\":\"" + ex.Message + "\"}";
                     }
-                    break;               
+                    break;
                 default:
-                    break;           
+                    break;
             }
 
             d.Clear();

@@ -365,17 +365,17 @@ namespace InI
                         memo = "000";
                         break;
                     case 2:
-                        checkedListBox1.Items.Add("三千公尺徒手跑步");
+                        checkedListBox1.Items.Add("三千公尺跑步");
                         checkedListBox2.Items.Add("5公里健走");
                         memo = "00G";
                         break;
                     case 3:
-                        checkedListBox1.Items.Add("三千公尺徒手跑步");
+                        checkedListBox1.Items.Add("三千公尺跑步");
                         checkedListBox2.Items.Add("5分鐘跳繩");
                         memo = "00H";
                         break;
                     case 4:
-                        checkedListBox1.Items.Add("三千公尺徒手跑步");
+                        checkedListBox1.Items.Add("三千公尺跑步");
                         checkedListBox2.Items.Add("800公尺游走");
                         memo = "00F";
                         break;
@@ -412,7 +412,7 @@ namespace InI
             }
             if (memo.Substring(2, 1) != "0")
             {
-                checkedListBox1.Items.Add("三千跑步");
+                checkedListBox1.Items.Add("三千公尺跑步");
                 checkedListBox2.Items.Add(itmeName[2]);
             }
 
@@ -1702,6 +1702,12 @@ namespace InI
         private void button1_Click(object sender, EventArgs e)
         {
             capture_Click(sender, e);
+        }
+
+        private void 基本資料補正ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdatesForm upForm = new UpdatesForm();
+            upForm.ShowDialog();
         }
 
         private void btn_Change_3K_Click(object sender, EventArgs e)

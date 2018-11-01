@@ -96,7 +96,7 @@ public partial class PresentResultMag : System.Web.UI.Page
     protected void falseUpload_OnClick(object sender, EventArgs e)
     {
         Lib.DataUtility du = new Lib.DataUtility();
-        DataTable dt = du.getDataTableByText("select * from result where status = @status and result = '111'", "status", "103");
+        DataTable dt = du.getDataTableByText("select * from result where status in (@status,'105') and result = '111'", "status", "103");
         //DataTable dt = du.getDataTableByText("select * from result where status = @status ", "status", "103"); // 未上傳不合格
         if (dt.Rows.Count == 0)
         {
@@ -122,7 +122,7 @@ public partial class PresentResultMag : System.Web.UI.Page
                     // 上傳更新總部資料
                     //main.executeNonQueryByText("update result set height = @height, weight=@weight, BMI = @BMI, bodyfat = @bodyfat, sit_ups = @sit_ups, sit_ups_score = @sit_ups_score, push_ups = @push_ups, push_ups_score = @push_ups_score, run = @run, run_score = @run_score, status = @status where sid = @sid", list);
                     // 更新鑑測站資料狀態
-                    du.executeNonQueryByText("update result set status = '203' , result = '222' where id = @id and result = '111' and status = '103'", list_u);
+                    du.executeNonQueryByText("update result set status = '203' , result = '222' where id = @id and result = '111' and status in ('103','105')", list_u);
                     Dictionary<string, object> d_log = new Dictionary<string, object>();
                     d_log.Add("acc", ((Lib.Center.Account_c)Session["account"]).Account);
                     d_log.Add("name", ((Lib.Center.Account_c)Session["account"]).Name);

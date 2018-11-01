@@ -23,6 +23,7 @@ namespace InI
         }
         private void NewReplaceitem_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;//開啟鍵盤觸發事件
             try
             {
                 center_code = System.Configuration.ConfigurationManager.AppSettings["centercode"].ToString();
@@ -162,7 +163,7 @@ namespace InI
             if (cbb_RepItem3.SelectedIndex == 0)
             {
                 Memo += "0";
-                RepName[2] = "三千跑步";
+                RepName[2] = "三千公尺跑步";
             }           
             else
             {

@@ -136,7 +136,7 @@ namespace ScoreClose
                         else
                         {
                             //舊版2018年之前用
-                            dt = du.getDataTableBysp(@"Ex108_CalResultByID", d);
+                            dt = du.getDataTableBysp(@"Ex106_CalResultByID", d);
                         }
                         
                         
@@ -199,7 +199,7 @@ namespace ScoreClose
                         else
                         {
                             //舊版2017年之前用
-                            dt = du.getDataTableBysp(@"Ex108_CalResultByCloNum", d);
+                            dt = du.getDataTableBysp(@"Ex106_CalResultByCloNum", d);
                         }
                         
                         
@@ -264,7 +264,7 @@ namespace ScoreClose
                     else
                     {
                         //舊版2017年之前用
-                        dt = du.getDataTableBysp(@"Ex108_CalResultByLFTag", d);
+                        dt = du.getDataTableBysp(@"Ex106_CalResultByLFTag", d);
                     }
                     
 

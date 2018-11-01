@@ -185,6 +185,7 @@ namespace InI
 
         private void _3K_Change_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;//開啟鍵盤觸發事件
             if (Age >= 45)
             {
                 lab_age45up.Text = "該員年齡[" + Age.ToString() + "歲]，已符合多元選項條件。";
