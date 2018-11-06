@@ -480,6 +480,20 @@ namespace Lib
 
             }
         }
+        //2018-11-5新增成績補正log
+        public static void AddResultCorrectLog(Dictionary<string, object> dic)
+        {
+            try
+            {
+                DataUtility du = new DataUtility();
+                Dictionary<string, object> d = dic;
+                du.executeNonQueryBysp("Ex108_AddResultCorrectLog", d);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
         
 
         public static SystemMode CurrentSystemMode()

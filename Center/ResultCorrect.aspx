@@ -374,6 +374,67 @@
         </body>
 </ContentTemplate>
 </ajaxToolkit:TabPanel>
+
+    <ajaxToolkit:TabPanel ID="TabPanel2" runat="server" HeaderText="成績異動查詢">
+<ContentTemplate>
+    <div style="margin-top: 5px; margin-bottom: 5px; vertical-align: bottom; height: 22px;">
+                    <asp:Label ID="Label1" runat="server" Text="請輸入鑑測日期(YYYY/MM/DD)："></asp:Label><asp:TextBox ID="txb_Date" runat="server" MaxLength="10"></asp:TextBox>
+                    <asp:Button ID="btn_InqDate" runat="server" CssClass="search" OnClick="btn_InqDate_Click" />
+                </div>
+                <div id="datenone" style="display: none;" runat="server">
+                    <span style="color: red; width: 200px; font-size: 16px; font-weight: bold; text-align: left; font-family: 微軟正黑體;">搜尋結果:查無資料</span>
+                </div>
+                <div>
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" lternatingRowStyle-CssClass="AltRowStyle" CssClass="GridViewStyle"
+                        Width="960px" PageSize="25" >
+                        <Columns>                           
+                            <asp:BoundField DataField="id" HeaderText="身份證字號" SortExpression="id" >
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="name" HeaderText="姓名" SortExpression="name">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="date" HeaderText="鑑測日期" SortExpression="date">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="old_sit_ups" HeaderText="(1)原成績" SortExpression="old_sit_ups">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="new_sit_ups" HeaderText="(1)新成績" SortExpression="new_sit_ups">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="old_push_ups" HeaderText="(2)原成績" SortExpression="old_push_ups">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="new_push_ups" HeaderText="(2)新成績" SortExpression="new_push_ups">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="old_run" HeaderText="(3)原成績" SortExpression="old_run">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="new_run" HeaderText="(3)新成績" SortExpression="new_run">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="account" HeaderText="操作人員" SortExpression="account">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="account_id" HeaderText="操作人員ID" SortExpression="account_id">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="update_time" HeaderText="異動時間" SortExpression="update_time">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
+                            
+                        </Columns>
+                        <EditRowStyle CssClass="EditRowStyle" />
+                        <HeaderStyle CssClass="HeaderStyle" Wrap="False" />
+                        <PagerStyle CssClass="PagerStyle" />
+                        <RowStyle CssClass="RowStyle" />
+                        <SelectedRowStyle CssClass="SelectedRowStyle" />
+                    </asp:GridView>
+                </div>
+</ContentTemplate>
+</ajaxToolkit:TabPanel>
 </ajaxToolkit:TabContainer>
 </asp:Content>
 

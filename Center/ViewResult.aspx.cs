@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using Lib;
 
 public partial class ViewResult : System.Web.UI.Page
 {
@@ -24,31 +25,7 @@ public partial class ViewResult : System.Web.UI.Page
     }
     protected void GridView_OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //e.Row.Cells[6].Text = Lib.SysSetting.ToRunMinSecFormat(e.Row.Cells[6].Text);
-        //    //分數的呈現
-        //    e.Row.Cells[3].Text = (e.Row.Cells[3].Text == "&nbsp;" || e.Row.Cells[3].Text == "999" ? " - " : e.Row.Cells[3].Text);
-        //    e.Row.Cells[5].Text = (e.Row.Cells[5].Text == "&nbsp;" || e.Row.Cells[5].Text == "999" ? " - " : e.Row.Cells[5].Text);
-        //    //次數與秒數的呈現
-        //    e.Row.Cells[2].Text = (e.Row.Cells[2].Text == "&nbsp;" ? " 未測 " : e.Row.Cells[2].Text);
-        //    e.Row.Cells[4].Text = (e.Row.Cells[4].Text == "&nbsp;" ? " 未測 " : e.Row.Cells[4].Text);
-        //    if (e.Row.Cells[6].Text == "9999")
-        //    {
-        //        e.Row.Cells[6].Text = " - ";
-        //        e.Row.Cells[7].Text = "未完測";
-        //    }
-        //    else if (e.Row.Cells[6].Text == "&nbsp;")
-        //    {
-        //        e.Row.Cells[6].Text = "未測";
-        //        e.Row.Cells[7].Text = " - ";
-        //    }
-        //    else
-        //    {
-        //        e.Row.Cells[6].Text = Lib.SysSetting.ToRunMinSecFormat(e.Row.Cells[6].Text);
-        //    }
-        //}
-
+        
     }
     protected void GridView2_PageIndexChanged(object sender, EventArgs e)
     {
@@ -117,5 +94,44 @@ public partial class ViewResult : System.Web.UI.Page
         Exception ex = Server.GetLastError();
         Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, sender.ToString());
         Server.ClearError();
+    }
+    //結算剩餘成績
+    protected void btn_CalculationResult_Click(object sender, EventArgs e)
+    {
+        Dictionary<string, object> d = new Dictionary<string, object>();
+        DataUtility du = new DataUtility();
+        DataTable dt = new DataTable();
+        try
+        {
+            d.Add("type", "001");
+            d.Add("value", System.DateTime.Now.ToShortDateString());
+            dt = du.getDataTableBysp("Ex108_ViewStatus", d);
+            DateTime ChangeDate = new DateTime(2018, 12, 31, 23, 59, 59);
+            if (dt.Rows.Count > 0)
+            {
+                for(int i = 0; i<dt.Rows.Count ; i++)
+                {
+                    Dictionary<string, object> di = new Dictionary<string, object>();
+                    string id = dt.Rows[i]["id"].ToString();
+                    DateTime today = Convert.ToDateTime(System.DateTime.Now.ToShortDateString());
+                    di.Add("id", id);
+                    di.Add("date", today);
+                    if (today > ChangeDate)
+                    {
+                        du.executeNonQueryBysp("Ex108_CalResultByID", di);
+                    }
+                    else
+                    {
+                        du.executeNonQueryBysp("Ex106_CalResultByID", di);
+                    }
+                }
+                Button6_OnClick(Button6, e);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "outside('" + dt.Rows.Count.ToString() + "')", true);
+            }
+        }
+        catch
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "outside('Err')", true);
+        }
     }
 }

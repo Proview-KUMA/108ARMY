@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Pro.aspx.cs" Inherits="Pro" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<link rel="Stylesheet" type="text/css" href="StyleSheet.css" />
+    <link rel="Stylesheet" type="text/css" href="StyleSheet.css" />
 <script type="text/javascript" src="Script/jquery-1.3.2-vsdoc2.js"></script>
 <script type="text/javascript" src="Script/RankCode.ashx"></script>
 <script type="text/javascript" src="Script/Common.js"></script>
@@ -111,7 +111,7 @@ $(function() {
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <asp:HiddenField ID="submitType" runat="server" />
 <ajaxToolkit:TabContainer ID="TabContainer1" runat="server" CssClass="ajax__tab_yuitabview-theme">
 <ajaxToolkit:TabPanel ID="TabPanel1" runat="server" HeaderText="個人資料維護">
@@ -126,37 +126,37 @@ $(function() {
    <tr>
    <td>身分證號</td>
    <td>
-       <asp:TextBox ID="txtID" runat="server"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtID" runat="server" Enabled="False" MaxLength="10"></asp:TextBox></td><td></td>
    </tr>
    <tr style="display:none">
    <td>密碼</td>
    <td>
-       <asp:TextBox ID="txtPwd" runat="server" TextMode="Password"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtPwd" runat="server" TextMode="Password" MaxLength="15"></asp:TextBox></td><td></td>
    </tr>
    <tr>
    <td>級職</td>
    <td>
-       <asp:TextBox ID="txtRank" runat="server"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtRank" runat="server" MaxLength="2"></asp:TextBox></td><td></td>
    </tr>
    <tr>
    <td>電話</td>
    <td>
-       <asp:TextBox ID="txtTel" runat="server"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtTel" runat="server" MaxLength="20"></asp:TextBox></td><td></td>
    </tr>
    <tr>
    <td>電子郵件</td>
    <td>
-       <asp:TextBox ID="txtMail" runat="server"></asp:TextBox>@webmail.mil.tw</td><td></td>
+       <asp:TextBox ID="txtMail" runat="server" MaxLength="30"></asp:TextBox>@webmail.mil.tw</td><td></td>
    </tr>
    <tr>
    <td>行動電話</td>
    <td>
-       <asp:TextBox ID="txtCell" runat="server"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtCell" runat="server" MaxLength="15"></asp:TextBox></td><td></td>
    </tr>
    <tr>
    <td>IP</td>
    <td>
-       <asp:TextBox ID="txtIP" runat="server"></asp:TextBox></td><td></td>
+       <asp:TextBox ID="txtIP" runat="server" MaxLength="15"></asp:TextBox></td><td></td>
    </tr>
    <tr>
    <td colspan="3">

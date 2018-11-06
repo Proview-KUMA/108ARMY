@@ -183,8 +183,6 @@ public class GetValueByCode : IHttpHandler
                                 //舊版2017年之前用
                                 du.executeNonQueryBysp("Ex106_CalResultByID", paralist);
                             }
-
-                            du.executeNonQueryBysp("Ex106_CalResultByID", paralist);
                             d.Add("status", "OK");
                         }
                         catch (Exception ex)

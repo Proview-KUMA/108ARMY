@@ -16,6 +16,9 @@ public partial class ResultCorrect : System.Web.UI.Page
     public static string old_pushups_score = "";
     public static string old_run = "";
     public static string old_run_score = "";
+    public static string new_sit_ups = string.Empty;
+    public static string new_push_ups = string.Empty;
+    public static string new_run = string.Empty;
     public static string sit_note = string.Empty;
     public static string push_note = string.Empty;
     public static string run_note = string.Empty;
@@ -23,23 +26,24 @@ public partial class ResultCorrect : System.Web.UI.Page
     public static string push_value = string.Empty;
     public static string run_value = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
-    {        
+    {
         txb_sit1.Attributes.Add("onfocus", "SetSelected_sit1();");
         txb_sit2.Attributes.Add("onfocus", "SetSelected_sit2();");
         txb_push1.Attributes.Add("onfocus", "SetSelected_push1();");
         txb_push2.Attributes.Add("onfocus", "SetSelected_push2();");
         txb_run1.Attributes.Add("onfocus", "SetSelected_run1();");
         txb_run2.Attributes.Add("onfocus", "SetSelected_run2();");
-        
+        if(!Page.IsPostBack)
+        txb_Date.Text = DateTime.Now.ToString("yyyy/MM/dd");
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        
+
         Lib.DataUtility du = new Lib.DataUtility();
         Dictionary<string, object> d = new Dictionary<string, object>();
         d.Clear();
         DateTime date = DateTime.Today;
-        d.Add("id", id.Value);
+        d.Add("id", id.Value.ToUpper());
         d.Add("date", date);
         DataTable dt = du.getDataTableBysp("GetResultCorrect", d);
         if (dt.Rows.Count == 1)
@@ -71,21 +75,21 @@ public partial class ResultCorrect : System.Web.UI.Page
             dateValue.Value = Convert.ToDateTime(dt.Rows[0]["date"].ToString()).ToShortDateString();
             checkid.Value = id.Value;
             //取得三項成績的次數或秒數
-            if(!string.IsNullOrEmpty(dt.Rows[0]["sit_ups"].ToString()))
+            if (!string.IsNullOrEmpty(dt.Rows[0]["sit_ups"].ToString()))
             {
-                sit_value= dt.Rows[0]["sit_ups"].ToString();
+                sit_value = dt.Rows[0]["sit_ups"].ToString();
             }
-            
-            if(!string.IsNullOrEmpty(dt.Rows[0]["push_ups"].ToString()))
+
+            if (!string.IsNullOrEmpty(dt.Rows[0]["push_ups"].ToString()))
             {
-                push_value=dt.Rows[0]["push_ups"].ToString();
+                push_value = dt.Rows[0]["push_ups"].ToString();
             }
 
             if (!string.IsNullOrEmpty(dt.Rows[0]["run"].ToString()))
             {
                 run_value = dt.Rows[0]["run"].ToString();
             }
-            
+
             //取得三項使用的單位
             sit_note = dt.Rows[0]["sit_ups_note"].ToString();
             push_note = dt.Rows[0]["push_ups_note"].ToString();
@@ -99,10 +103,10 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_sit1.Text = "分";
                 lab_sit2.Text = "秒";
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit1.Text = (Convert.ToInt32(sit_value) / 60).ToString();
+                    txb_sit1.Text = (Convert.ToInt32(sit_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit2.Text = (Convert.ToInt32(sit_value) % 60).ToString();
-                
+                    txb_sit2.Text = (Convert.ToInt32(sit_value) % 60).ToString();
+
             }
             else
             {
@@ -113,7 +117,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_sit1.Text = "";
                 lab_sit2.Text = "次";
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit2.Text = sit_value.ToString();
+                    txb_sit2.Text = sit_value.ToString();
             }
             if (push_note == "秒")
             {
@@ -123,10 +127,10 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_push2.Visible = true;
                 lab_push1.Text = "分";
                 lab_push2.Text = "秒";
-                if(!string.IsNullOrEmpty(push_value))
-                txb_push1.Text = (Convert.ToInt32(push_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(push_value))
-                txb_push2.Text = (Convert.ToInt32(push_value) % 60).ToString();
+                    txb_push1.Text = (Convert.ToInt32(push_value) / 60).ToString();
+                if (!string.IsNullOrEmpty(push_value))
+                    txb_push2.Text = (Convert.ToInt32(push_value) % 60).ToString();
             }
             else
             {
@@ -137,9 +141,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_push1.Text = "";
                 lab_push2.Text = "次";
                 if (!string.IsNullOrEmpty(push_value))
-                txb_push2.Text = push_value.ToString();
+                    txb_push2.Text = push_value.ToString();
             }
-            if (run_note =="秒")
+            if (run_note == "秒")
             {
                 txb_run1.Visible = true;
                 txb_run2.Visible = true;
@@ -148,9 +152,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_run1.Text = "分";
                 lab_run2.Text = "秒";
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run1.Text = (Convert.ToInt32(run_value) / 60).ToString();
+                    txb_run1.Text = (Convert.ToInt32(run_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run2.Text = (Convert.ToInt32(run_value) % 60).ToString();
+                    txb_run2.Text = (Convert.ToInt32(run_value) % 60).ToString();
             }
             else
             {
@@ -161,7 +165,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_run1.Text = "";
                 lab_run2.Text = "次";
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run2.Text = run_value.ToString();
+                    txb_run2.Text = run_value.ToString();
             }
         }
         else
@@ -181,7 +185,7 @@ public partial class ResultCorrect : System.Web.UI.Page
             sit_value = string.Empty;
             push_value = string.Empty;
             run_value = string.Empty;
-            
+
             //2016-1-25修改完後欄位全關閉
             sit_ups_name.Text = null;
             txb_sit1.Visible = false;
@@ -222,23 +226,27 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60) + Convert.ToInt32(txb_sit2.Text.Trim());
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_sit1.Text.Trim()) & string.IsNullOrEmpty(txb_sit2.Text.Trim()))
                     {
                         int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60);
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_sit1.Text.Trim()) & !string.IsNullOrEmpty(txb_sit2.Text.Trim()))
                     {
                         int sit_sec = Convert.ToInt32(txb_sit2.Text.Trim());
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("sit_ups", DBNull.Value);
+                        new_sit_ups = string.Empty;
                     }
                 }
                 //使用次數
@@ -250,23 +258,27 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60) + Convert.ToInt32(txb_sit2.Text.Trim());
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_sit1.Text.Trim()) & string.IsNullOrEmpty(txb_sit2.Text.Trim()))
                     {
                         int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60);
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_sit1.Text.Trim()) & !string.IsNullOrEmpty(txb_sit2.Text.Trim()))
                     {
                         int sit_sec = Convert.ToInt32(txb_sit2.Text.Trim());
                         d.Add("sit_ups", sit_sec);
+                        new_sit_ups = sit_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("sit_ups", DBNull.Value);
+                        new_sit_ups = string.Empty;
                     }
                 }
 
@@ -280,23 +292,27 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60) + Convert.ToInt32(txb_push2.Text.Trim());
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_push1.Text.Trim()) & string.IsNullOrEmpty(txb_push2.Text.Trim()))
                     {
                         int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60);
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_push1.Text.Trim()) & !string.IsNullOrEmpty(txb_push2.Text.Trim()))
                     {
                         int push_sec = Convert.ToInt32(txb_push2.Text.Trim());
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("push_ups", DBNull.Value);
+                        new_push_ups = string.Empty;
                     }
                 }
                 //使用次數
@@ -306,23 +322,27 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60) + Convert.ToInt32(txb_push2.Text.Trim());
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_push1.Text.Trim()) & string.IsNullOrEmpty(txb_push2.Text.Trim()))
                     {
                         int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60);
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_push1.Text.Trim()) & !string.IsNullOrEmpty(txb_push2.Text.Trim()))
                     {
                         int push_sec = Convert.ToInt32(txb_push2.Text.Trim());
                         d.Add("push_ups", push_sec);
+                        new_push_ups = push_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("push_ups", DBNull.Value);
+                        new_push_ups = string.Empty;
                     }
 
                 }
@@ -338,25 +358,27 @@ public partial class ResultCorrect : System.Web.UI.Page
 
                         int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60) + Convert.ToInt32(txb_run2.Text.Trim());
                         d.Add("run", run_sec);
+                        new_run = run_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_run1.Text.Trim()) & string.IsNullOrEmpty(txb_run2.Text.Trim()))
                     {
                         int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60);
                         d.Add("run", run_sec);
-
+                        new_run = run_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_run1.Text.Trim()) & !string.IsNullOrEmpty(txb_run2.Text.Trim()))
                     {
                         int run_sec = Convert.ToInt32(txb_run2.Text.Trim());
                         d.Add("run", run_sec);
-
+                        new_run = run_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("run", DBNull.Value);
+                        new_run = string.Empty;
                     }
                 }
                 //使用次數
@@ -367,36 +389,40 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60) + Convert.ToInt32(txb_run2.Text.Trim());
                         d.Add("run", run_sec);
+                        new_run = run_sec.ToString();
                     }
                     //分有值、秒空白
                     else if (!string.IsNullOrEmpty(txb_run1.Text.Trim()) & string.IsNullOrEmpty(txb_run2.Text.Trim()))
                     {
                         int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60);
                         d.Add("run", run_sec);
+                        new_run = run_sec.ToString();
                     }
                     //分空白、秒有值
                     else if (string.IsNullOrEmpty(txb_run1.Text.Trim()) & !string.IsNullOrEmpty(txb_run2.Text.Trim()))
                     {
                         int run_sec = Convert.ToInt32(txb_run2.Text);
                         d.Add("run", run_sec);
+                        new_run = run_sec.ToString();
                     }
                     //都空白
                     else
                     {
                         d.Add("run", DBNull.Value);
+                        new_run = string.Empty;
                     }
 
                 }
 
-                d.Add("id", id.Value);
+                d.Add("id", id.Value.ToUpper());
                 d.Add("date", Convert.ToDateTime(dateValue.Value));
                 try
                 {
                     du.executeNonQueryByText("update result set sit_ups = @sit_ups, push_ups = @push_ups, run=@run where id = @id and date = @date and status in ('102','103','105')", d);
-                    
+
                     //2017-1-26再重新計算一次成績
                     Dictionary<string, object> d1 = new Dictionary<string, object>();
-                    d1.Add("id", id.Value);
+                    d1.Add("id", id.Value.ToUpper());
                     d1.Add("date", Convert.ToDateTime(dateValue.Value));
                     //2018-10-11新增異動時間點
                     DateTime ChangeDate = new DateTime(2018, 12, 31, 23, 59, 59);
@@ -409,11 +435,48 @@ public partial class ResultCorrect : System.Web.UI.Page
                     {
                         du.executeNonQueryBysp("Ex106_CalResultByID", d1);
                     }
-                    
+
                     d1.Clear();
 
                     Account_c acc = (Account_c)Session["account"];
-                    Lib.SysSetting.AddLog("成績補正", acc.Account, "補正對象: (" + id.Value + ") 補正前成績為(" + sit_ups_name.Text + ": " + old_situps + "次/秒, " + push_ups_name.Text + ": " + old_pushups + "次/秒, " + run_name.Text + ": " + old_run + "次/秒)" + "補正後成績為(" + sit_ups_name.Text + ": " + sit_value + "次/秒, " + push_ups_name.Text + ": " + push_value + "次/秒, " + run_name.Text + ": " + run_value + "次/秒)", DateTime.Now);
+                    //Lib.SysSetting.AddLog("成績補正", acc.Account, "補正對象: (" + id.Value + ") 補正前成績為(" + sit_ups_name.Text + ": " + old_situps + "次/秒, " + push_ups_name.Text + ": " + old_pushups + "次/秒, " + run_name.Text + ": " + old_run + "次/秒)" + "補正後成績為(" + sit_ups_name.Text + ": " + sit_value + "次/秒, " + push_ups_name.Text + ": " + push_value + "次/秒, " + run_name.Text + ": " + run_value + "次/秒)", DateTime.Now);
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("id", id.Value.ToUpper());
+                    dic.Add("name", name.Value);
+                    dic.Add("date", Convert.ToDateTime(dateValue.Value));
+                    if (!string.IsNullOrEmpty(old_situps))
+                        dic.Add("old_sit_ups", old_situps);
+                    else
+                        dic.Add("old_sit_ups", DBNull.Value);
+                    if (!string.IsNullOrEmpty(old_pushups))
+                        dic.Add("old_push_ups", old_pushups);
+                    else
+                        dic.Add("old_push_ups", DBNull.Value);
+                    if (!string.IsNullOrEmpty(old_run))
+                        dic.Add("old_run", old_run);
+                    else
+                        dic.Add("old_run", DBNull.Value);
+                    //未完成11-5
+                    if (!string.IsNullOrEmpty(new_sit_ups))
+                        dic.Add("new_sit_ups", new_sit_ups);
+                    else
+                        dic.Add("new_sit_ups", DBNull.Value);
+                    if (!string.IsNullOrEmpty(new_push_ups))
+                        dic.Add("new_push_ups", new_push_ups);
+                    else
+                        dic.Add("new_push_ups", DBNull.Value);
+                    if (!string.IsNullOrEmpty(new_run))
+                        dic.Add("new_run", new_run);
+                    else
+                        dic.Add("new_run", DBNull.Value);
+                    dic.Add("account", acc.Account);
+                    if (!string.IsNullOrEmpty(acc.ID))
+                        dic.Add("account_id", acc.ID);
+                    else
+                        dic.Add("account_id", DBNull.Value);
+                    dic.Add("update_time", DateTime.Now);
+
+                    Lib.SysSetting.AddResultCorrectLog(dic);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
                     id.Value = "";
                     //situps.Value = "";
@@ -433,6 +496,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                     sit_value = string.Empty;
                     push_value = string.Empty;
                     run_value = string.Empty;
+                    new_sit_ups = string.Empty;
+                    new_push_ups = string.Empty;
+                    new_run = string.Empty;
                     //2016-1-25修改完後欄位全關閉
                     sit_ups_name.Text = null;
                     txb_sit1.Visible = false;
@@ -493,7 +559,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_run2.Text = null;
             }
         }
-      
+
     }
 
     void Page_Error(object sender, EventArgs e)
@@ -503,4 +569,33 @@ public partial class ResultCorrect : System.Web.UI.Page
         Server.ClearError();
     }
 
+
+    protected void btn_InqDate_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            this.datenone.Style.Value = "display:none";
+            Lib.DataUtility du = new Lib.DataUtility();
+            Dictionary<string, object> d = new Dictionary<string, object>();
+            d.Add("date", txb_Date.Text.Trim());
+
+            DataTable dt = du.getDataTableBysp("Ex108_GetResultCorrectLog", d);
+
+            if (dt.Rows.Count > 0)
+                GridView1.DataSource = dt;
+            else if (dt.Rows.Count == 0)
+                this.datenone.Style.Value = "";
+            else
+                this.datenone.Style.Value = "display:none";
+            GridView1.DataBind();
+            TabContainer1.ActiveTabIndex = 1;
+        }
+        catch(Exception ex)
+        {
+            this.datenone.Style.Value = "日期格式錯誤";
+            GridView1.DataBind();
+            TabContainer1.ActiveTabIndex = 1;
+        }
+        
+    }
 }

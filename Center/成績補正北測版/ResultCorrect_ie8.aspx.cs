@@ -28,7 +28,7 @@ public partial class ResultCorrect : System.Web.UI.Page
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        
+
         Lib.DataUtility du = new Lib.DataUtility();
         Dictionary<string, object> d = new Dictionary<string, object>();
         d.Clear();
@@ -65,21 +65,21 @@ public partial class ResultCorrect : System.Web.UI.Page
             dateValue.Value = Convert.ToDateTime(dt.Rows[0]["date"].ToString()).ToShortDateString();
             checkid.Value = id.Value;
             //取得三項成績的次數或秒數
-            if(!string.IsNullOrEmpty(dt.Rows[0]["sit_ups"].ToString()))
+            if (!string.IsNullOrEmpty(dt.Rows[0]["sit_ups"].ToString()))
             {
-                sit_value= dt.Rows[0]["sit_ups"].ToString();
+                sit_value = dt.Rows[0]["sit_ups"].ToString();
             }
-            
-            if(!string.IsNullOrEmpty(dt.Rows[0]["push_ups"].ToString()))
+
+            if (!string.IsNullOrEmpty(dt.Rows[0]["push_ups"].ToString()))
             {
-                push_value=dt.Rows[0]["push_ups"].ToString();
+                push_value = dt.Rows[0]["push_ups"].ToString();
             }
 
             if (!string.IsNullOrEmpty(dt.Rows[0]["run"].ToString()))
             {
                 run_value = dt.Rows[0]["run"].ToString();
             }
-            
+
             //取得三項使用的單位
             sit_note = dt.Rows[0]["sit_ups_note"].ToString();
             push_note = dt.Rows[0]["push_ups_note"].ToString();
@@ -93,9 +93,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_sit1.Text = "分";
                 lab_sit2.Text = "秒";
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit1.Text = (Convert.ToInt32(sit_value) / 60).ToString();
+                    txb_sit1.Text = (Convert.ToInt32(sit_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit2.Text = (Convert.ToInt32(sit_value) % 60).ToString();
+                    txb_sit2.Text = (Convert.ToInt32(sit_value) % 60).ToString();
             }
             else
             {
@@ -106,7 +106,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_sit1.Text = "";
                 lab_sit2.Text = "次";
                 if (!string.IsNullOrEmpty(sit_value))
-                txb_sit2.Text = sit_value.ToString();
+                    txb_sit2.Text = sit_value.ToString();
             }
             if (push_note == "秒")
             {
@@ -116,10 +116,10 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_push2.Visible = true;
                 lab_push1.Text = "分";
                 lab_push2.Text = "秒";
-                if(!string.IsNullOrEmpty(push_value))
-                txb_push1.Text = (Convert.ToInt32(push_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(push_value))
-                txb_push2.Text = (Convert.ToInt32(push_value) % 60).ToString();
+                    txb_push1.Text = (Convert.ToInt32(push_value) / 60).ToString();
+                if (!string.IsNullOrEmpty(push_value))
+                    txb_push2.Text = (Convert.ToInt32(push_value) % 60).ToString();
             }
             else
             {
@@ -130,9 +130,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_push1.Text = "";
                 lab_push2.Text = "次";
                 if (!string.IsNullOrEmpty(push_value))
-                txb_push2.Text = push_value.ToString();
+                    txb_push2.Text = push_value.ToString();
             }
-            if (run_note =="秒")
+            if (run_note == "秒")
             {
                 txb_run1.Visible = true;
                 txb_run2.Visible = true;
@@ -141,9 +141,9 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_run1.Text = "分";
                 lab_run2.Text = "秒";
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run1.Text = (Convert.ToInt32(run_value) / 60).ToString();
+                    txb_run1.Text = (Convert.ToInt32(run_value) / 60).ToString();
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run2.Text = (Convert.ToInt32(run_value) % 60).ToString();
+                    txb_run2.Text = (Convert.ToInt32(run_value) % 60).ToString();
             }
             else
             {
@@ -154,7 +154,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                 lab_run1.Text = "";
                 lab_run2.Text = "次";
                 if (!string.IsNullOrEmpty(run_value))
-                txb_run2.Text = run_value.ToString();
+                    txb_run2.Text = run_value.ToString();
             }
         }
         else
@@ -174,7 +174,7 @@ public partial class ResultCorrect : System.Web.UI.Page
             sit_value = string.Empty;
             push_value = string.Empty;
             run_value = string.Empty;
-            
+
             //2016-1-25修改完後欄位全關閉
             sit_ups_name.Text = null;
             txb_sit1.Visible = false;
@@ -195,14 +195,14 @@ public partial class ResultCorrect : System.Web.UI.Page
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-      string t = old_run_score;
-                Lib.DataUtility du = new Lib.DataUtility();
-                Dictionary<string, object> d = new Dictionary<string, object>();
-                d.Clear();
+        string t = old_run_score;
+        Lib.DataUtility du = new Lib.DataUtility();
+        Dictionary<string, object> d = new Dictionary<string, object>();
+        d.Clear();
         //判斷身份證字號是否正確
-        if(id.Value != ""  && id.Value == checkid.Value)
+        if (id.Value != "" && id.Value == checkid.Value)
         {
-         //判斷第一項是用次數還是秒
+            //判斷第一項是用次數還是秒
             //使用分秒
             if (sit_note == "秒")
             {
@@ -213,8 +213,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_sit1.Text.Trim()) < 60 & Convert.ToInt32(txb_sit2.Text.Trim()) < 60 & Convert.ToInt32(txb_sit1.Text.Trim()) >= 0 & Convert.ToInt32(txb_sit2.Text.Trim()) >= 0)
                     //{
-                        int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60) + Convert.ToInt32(txb_sit2.Text.Trim());
-                        d.Add("sit_ups", sit_sec);
+                    int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60) + Convert.ToInt32(txb_sit2.Text.Trim());
+                    d.Add("sit_ups", sit_sec);
                     //}
                     //else
                     //{
@@ -228,8 +228,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_sit1.Text.Trim()) < 60 & Convert.ToInt32(txb_sit1.Text.Trim()) >= 0)
                     //{
-                        int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60);
-                        d.Add("sit_ups", sit_sec);
+                    int sit_sec = (Convert.ToInt32(txb_sit1.Text.Trim()) * 60);
+                    d.Add("sit_ups", sit_sec);
                     //}
                     //else
                     //{
@@ -244,8 +244,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_sit2.Text.Trim()) < 60 & Convert.ToInt32(txb_sit2.Text.Trim()) >= 0)
                     //{
-                        int sit_sec = Convert.ToInt32(txb_sit2.Text.Trim());
-                        d.Add("sit_ups", sit_sec);
+                    int sit_sec = Convert.ToInt32(txb_sit2.Text.Trim());
+                    d.Add("sit_ups", sit_sec);
                     //}
                     //else
                     //{
@@ -307,8 +307,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_push1.Text.Trim()) < 60 & Convert.ToInt32(txb_push2.Text.Trim()) < 60 & Convert.ToInt32(txb_push1.Text.Trim()) >= 0 & Convert.ToInt32(txb_push2.Text.Trim()) >= 0)
                     //{
-                        int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60) + Convert.ToInt32(txb_push2.Text.Trim());
-                        d.Add("push_ups", push_sec);
+                    int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60) + Convert.ToInt32(txb_push2.Text.Trim());
+                    d.Add("push_ups", push_sec);
                     //}
                     //else
                     //{
@@ -322,8 +322,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_push1.Text.Trim()) < 60 & Convert.ToInt32(txb_push1.Text.Trim()) >= 0)
                     //{
-                        int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60);
-                        d.Add("push_ups", push_sec);
+                    int push_sec = (Convert.ToInt32(txb_push1.Text.Trim()) * 60);
+                    d.Add("push_ups", push_sec);
                     //}
                     //else
                     //{
@@ -338,8 +338,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_push2.Text.Trim()) < 60 & Convert.ToInt32(txb_push2.Text.Trim()) >= 0)
                     //{
-                        int push_sec = Convert.ToInt32(txb_push2.Text.Trim());
-                        d.Add("push_ups", push_sec);
+                    int push_sec = Convert.ToInt32(txb_push2.Text.Trim());
+                    d.Add("push_ups", push_sec);
                     //}
                     //else
                     //{
@@ -402,8 +402,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_run1.Text.Trim()) < 60 & Convert.ToInt32(txb_run2.Text.Trim()) < 60 & Convert.ToInt32(txb_run1.Text.Trim()) >= 0 & Convert.ToInt32(txb_run2.Text.Trim()) >= 0)
                     //{
-                        int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60) + Convert.ToInt32(txb_run2.Text.Trim());
-                        d.Add("run", run_sec);
+                    int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60) + Convert.ToInt32(txb_run2.Text.Trim());
+                    d.Add("run", run_sec);
                     //}
                     //else
                     //{
@@ -417,8 +417,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_run1.Text.Trim()) < 60 & Convert.ToInt32(txb_run1.Text.Trim()) >= 0)
                     //{
-                        int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60);
-                        d.Add("run", run_sec);
+                    int run_sec = (Convert.ToInt32(txb_run1.Text.Trim()) * 60);
+                    d.Add("run", run_sec);
                     //}
                     //else
                     //{
@@ -433,8 +433,8 @@ public partial class ResultCorrect : System.Web.UI.Page
                     //再判斷欄位是不是小於60(拿掉)
                     //if (Convert.ToInt32(txb_run2.Text.Trim()) < 60 & Convert.ToInt32(txb_run2.Text.Trim()) >= 0)
                     //{
-                        int run_sec = Convert.ToInt32(txb_run2.Text.Trim());
-                        d.Add("run", run_sec);
+                    int run_sec = Convert.ToInt32(txb_run2.Text.Trim());
+                    d.Add("run", run_sec);
                     //}
                     //else
                     //{
@@ -485,82 +485,92 @@ public partial class ResultCorrect : System.Web.UI.Page
                 }
 
             }
-                //舊版
-                //string t = old_run_score;
-                //Lib.DataUtility du = new Lib.DataUtility();
-                //Dictionary<string, object> d = new Dictionary<string, object>();
-                //
-                ////d.Add("id", string t = (id.Value == "")?id.Value : System.DBNull.Value);
-                //if (situps.Value == "" || situps.Value == "null")
-                //    d.Add("sit_ups", DBNull.Value);                 
-                //else
-                //    d.Add("sit_ups", situps.Value);
+            //舊版
+            //string t = old_run_score;
+            //Lib.DataUtility du = new Lib.DataUtility();
+            //Dictionary<string, object> d = new Dictionary<string, object>();
+            //
+            ////d.Add("id", string t = (id.Value == "")?id.Value : System.DBNull.Value);
+            //if (situps.Value == "" || situps.Value == "null")
+            //    d.Add("sit_ups", DBNull.Value);                 
+            //else
+            //    d.Add("sit_ups", situps.Value);
 
-                //if (pushups.Value == "" || pushups.Value == "null")
-                //    d.Add("push_ups", DBNull.Value); 
-                //else
-                //    d.Add("push_ups", pushups.Value);
+            //if (pushups.Value == "" || pushups.Value == "null")
+            //    d.Add("push_ups", DBNull.Value); 
+            //else
+            //    d.Add("push_ups", pushups.Value);
 
-                //if (run.Value == "" || run.Value == "null")
-                //    d.Add("run", DBNull.Value);
-                //else
-                //    d.Add("run", run.Value);
+            //if (run.Value == "" || run.Value == "null")
+            //    d.Add("run", DBNull.Value);
+            //else
+            //    d.Add("run", run.Value);
 
-                d.Add("id", id.Value); 
-                d.Add("date", Convert.ToDateTime(dateValue.Value));
-                try
+            d.Add("id", id.Value);
+            d.Add("date", Convert.ToDateTime(dateValue.Value));
+            try
+            {
+                du.executeNonQueryByText("update result set sit_ups = @sit_ups, push_ups = @push_ups, run=@run where id = @id and date = @date and status in ('102','103','105')", d);
+                //2017-1-26再重新計算一次成績
+                Dictionary<string, object> d1 = new Dictionary<string, object>();
+                d1.Add("id", id.Value);
+                d1.Add("date", Convert.ToDateTime(dateValue.Value));
+                //2018-10-11新增異動時間點
+                DateTime ChangeDate = new DateTime(2018, 12, 31, 23, 59, 59);
+                DateTime TodayDate = Convert.ToDateTime(dateValue.Value);
+                if (TodayDate > ChangeDate)
                 {
-                    du.executeNonQueryByText("update result set sit_ups = @sit_ups, push_ups = @push_ups, run=@run where id = @id and date = @date and status in ('102','103','105')", d);
-                    //2017-1-26再重新計算一次成績
-                    Dictionary<string, object> d1 = new Dictionary<string, object>();
-                    d1.Add("id", id.Value);
-                    d1.Add("date", Convert.ToDateTime(dateValue.Value));
+                    du.executeNonQueryBysp("Ex108_CalResultByID", d1);
+                }
+                else
+                {
                     du.executeNonQueryBysp("Ex106_CalResultByID", d1);
-                    d1.Clear();
+                }
+                d1.Clear();
 
-                    Account_c acc = (Account_c)Session["account"];
-                    Lib.SysSetting.AddLog("成績補正", acc.Account, "補正對象: ("+ id.Value + ") 補正前成績為("+sit_ups_name.Text+": " + old_situps + "次/秒, "+push_ups_name.Text+": " + old_pushups + "次/秒, "+run_name.Text+": " + old_run + "次/秒)" + "補正後成績為("+sit_ups_name.Text+": " + sit_value + "次/秒, "+push_ups_name.Text+": " + push_value + "次/秒, "+run_name.Text+": " + run_value + "次/秒)", DateTime.Now);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
-                    id.Value = "";
-                    //situps.Value = "";
-                    //pushups.Value = "";
-                    //run.Value = "";
-                    name.Value = "";
-                    //清空欄位
-                    txb_sit1.Text = null;
-                    txb_sit2.Text = null;
-                    txb_push1.Text = null;
-                    txb_push2.Text = null;
-                    txb_run1.Text = null;
-                    txb_run2.Text = null;
-                    sit_note = string.Empty;
-                    push_note = string.Empty;
-                    run_note = string.Empty;
-                    sit_value = string.Empty;
-                    push_value = string.Empty;
-                    run_value = string.Empty;
-                    //2016-1-25修改完後欄位全關閉
-                    sit_ups_name.Text = null;
-                    txb_sit1.Visible = false;
-                    txb_sit2.Visible = false;
-                    lab_sit1.Text = null;
-                    lab_sit2.Text = null;
-                    push_ups_name.Text = null;
-                    txb_push1.Visible = false;
-                    txb_push2.Visible = false;
-                    lab_push1.Text = null;
-                    lab_push2.Text = null;
-                    run_name.Text = null;
-                    txb_run1.Visible = false;
-                    txb_run2.Visible = false;
-                    lab_run1.Text = null;
-                    lab_run2.Text = null;
-                }
-                catch (Exception ex)
-                {
-                    Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, sender.ToString());
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('" + ex.Message.ToString() + "');", true);
-                }
+                Account_c acc = (Account_c)Session["account"];
+                Lib.SysSetting.AddLog("成績補正", acc.Account, "補正對象: (" + id.Value + ") 補正前成績為(" + sit_ups_name.Text + ": " + old_situps + "次/秒, " + push_ups_name.Text + ": " + old_pushups + "次/秒, " + run_name.Text + ": " + old_run + "次/秒)" + "補正後成績為(" + sit_ups_name.Text + ": " + sit_value + "次/秒, " + push_ups_name.Text + ": " + push_value + "次/秒, " + run_name.Text + ": " + run_value + "次/秒)", DateTime.Now);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
+                id.Value = "";
+                //situps.Value = "";
+                //pushups.Value = "";
+                //run.Value = "";
+                name.Value = "";
+                //清空欄位
+                txb_sit1.Text = null;
+                txb_sit2.Text = null;
+                txb_push1.Text = null;
+                txb_push2.Text = null;
+                txb_run1.Text = null;
+                txb_run2.Text = null;
+                sit_note = string.Empty;
+                push_note = string.Empty;
+                run_note = string.Empty;
+                sit_value = string.Empty;
+                push_value = string.Empty;
+                run_value = string.Empty;
+                //2016-1-25修改完後欄位全關閉
+                sit_ups_name.Text = null;
+                txb_sit1.Visible = false;
+                txb_sit2.Visible = false;
+                lab_sit1.Text = null;
+                lab_sit2.Text = null;
+                push_ups_name.Text = null;
+                txb_push1.Visible = false;
+                txb_push2.Visible = false;
+                lab_push1.Text = null;
+                lab_push2.Text = null;
+                run_name.Text = null;
+                txb_run1.Visible = false;
+                txb_run2.Visible = false;
+                lab_run1.Text = null;
+                lab_run2.Text = null;
+            }
+            catch (Exception ex)
+            {
+                Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, sender.ToString());
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('" + ex.Message.ToString() + "');", true);
+            }
 
         }
         else
