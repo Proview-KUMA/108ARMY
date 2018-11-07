@@ -10,45 +10,29 @@ using System.Drawing;
 using System.Data;
 using Lib;
 
-public partial class _108_ServerStatus : System.Web.UI.Page
+public partial class _108_CenterStatus : System.Web.UI.Page
 {
     //測試新位置git
     private static string SvIp = string.Empty;
-    private static string GatewayIp=String.Empty;
+    private static string GatewayIp = String.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["account"] != null)
+        try
         {
-            Account a = (Account)Session["account"];
-            if (a.Role != ((int)SysSetting.Role.admin_hq).ToString())
-            {
-                Response.Redirect("~/index.aspx");
-            }
-            else
-            {
-                try
-                {
-                    SvIp = GetSvIp();
-                    GatewayIp = GetGatewayIp();
-                }
-                catch (Exception ex)
-                {
-                    //記錄錯誤訊息
-                    SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
-                    SvIp = "查詢本機ip失敗";
-                    GatewayIp = "查詢本機ip失敗";
-                }
-                lab_SvIp.Text = SvIp;
-                lab_GatewayIp.Text = GatewayIp;
-                lab_DBTime.Text = Get_DBTime();
-                lab_SvTime.Text = DateTime.Now.ToString();
-            }
+            SvIp = GetSvIp();
+            GatewayIp = GetGatewayIp();
         }
-        if (Session["account"] == null && Session["player"] == null)
+        catch (Exception ex)
         {
-            Response.Redirect("~/Login.aspx");
+            //記錄錯誤訊息
+            SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
+            SvIp = "查詢本機ip失敗";
+            GatewayIp = "查詢本機ip失敗";
         }
-        
+        lab_SvIp.Text = SvIp;
+        lab_GatewayIp.Text = GatewayIp;
+        lab_DBTime.Text = Get_DBTime();
+        lab_SvTime.Text = DateTime.Now.ToString();
     }
 
     //檢查閘道連線
@@ -63,30 +47,32 @@ public partial class _108_ServerStatus : System.Web.UI.Page
             {
                 lab_PingGatewayResult.ForeColor = Color.Blue;
                 lab_PingGatewayResult.Text = "連線正常";
-            }             
+            }
             else
             {
                 lab_PingGatewayResult.Text = "連線失敗";
             }
-                
+
         }
         else
         {
             lab_PingGatewayResult.Text = "查無預設閘道IP設定值";
         }
-        
+
     }
 
-    //檢查人事資料庫連線
+    //檢查總部伺服器連線
     public void btn_PingFec_Click(object sender, EventArgs e)
     {
         lab_PingFecResult.ForeColor = Color.Red;
         lab_PingFecResult.Text = null;
         try
         {
-            //總部需加入新的websv服務
-            Fec_WebReference.WebService FecWebSv = new Fec_WebReference.WebService();
-            string s = FecWebSv.HelloWorld();
+            ////鑑測站用
+            //MainWS.WebService MainWebSv = new MainWS.WebService();
+            //公司測試用
+            office_MainWS.WebService MainWebSv = new office_MainWS.WebService();
+            string s = MainWebSv.HelloWorld();
             lab_PingFecResult.ForeColor = Color.Blue;
             lab_PingFecResult.Text = "連線正常";
         }
@@ -121,7 +107,7 @@ public partial class _108_ServerStatus : System.Web.UI.Page
         }
         return context.Request.ServerVariables["REMOTE_ADDR"];
     }
-    
+
     public static string GetGatewayIp()
     {
         IPAddress result = null;
@@ -151,7 +137,7 @@ public partial class _108_ServerStatus : System.Web.UI.Page
         return result.ToString();
     }
 
-    
+
     //取得資料庫電腦時間
     public static string Get_DBTime()
     {

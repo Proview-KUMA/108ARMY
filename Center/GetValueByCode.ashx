@@ -148,20 +148,29 @@ public class GetValueByCode : IHttpHandler
                 case "InsertScore":
                     Dictionary<string, object> paralist = new Dictionary<string, object>();
                     paralist.Add("id", context.Request.Params["id"]);
-                    paralist.Add("name", context.Request.Params["name"]);d.Add("name", context.Request.Params["name"]);
+                    paralist.Add("name", context.Request.Params["name"]);
                     paralist.Add("birth", Lib.SysSetting.ToWorldDate(context.Request.Params["birth"].Replace('-', '/')));
                     paralist.Add("gender", context.Request.Params["gender"]);
                     paralist.Add("unit_code", context.Request.Params["unit_code"]);
                     paralist.Add("rank_code", context.Request.Params["rank_code"]);
-                    paralist.Add("sit_ups", context.Request.Params["sit_ups"]);
-                    paralist.Add("push_ups", context.Request.Params["push_ups"]);
-                    paralist.Add("run", context.Request.Params["run"]);
+                    if (context.Request.Params["sit_ups"].ToString() == "0")
+                        paralist.Add("sit_ups", DBNull.Value);
+                    else
+                        paralist.Add("sit_ups", context.Request.Params["sit_ups"]);
+                    if (context.Request.Params["push_ups"].ToString() == "0")
+                        paralist.Add("push_ups", DBNull.Value);
+                    else
+                        paralist.Add("push_ups", context.Request.Params["push_ups"]);
+                    if (context.Request.Params["run"].ToString() == "0")
+                        paralist.Add("run", DBNull.Value);
+                    else
+                        paralist.Add("run", context.Request.Params["run"]);
                     paralist.Add("date", context.Request.Params["date"]);
                     paralist.Add("memo", context.Request.Params["memo"]);
                     paralist.Add("age", Lib.SysSetting.ConvertAge(Lib.SysSetting.ToWorldDate(context.Request.Params["birth"].Replace('-', '/')), Convert.ToDateTime(context.Request.Params["date"])).ToString());
-                    paralist.Add("center_code", Lib.SysSetting.CenterCode);
-                    //paralist.Add("center_code", "10");
-                    dt = du.getDataTableByText(@"Select * from Result where id = @id and date = @date", paralist);
+                    //paralist.Add("center_code", Lib.SysSetting.CenterCode);
+                    paralist.Add("center_code", "10");
+                    dt = du.getDataTableByText(@"Select * from Result where id = @id and result='111'", paralist);
                     if (dt.Rows.Count == 0)
                     {
                         try
@@ -193,7 +202,7 @@ public class GetValueByCode : IHttpHandler
                     }
                     else
                     {
-                        d.Add("status", "[鑑測站]當日已有一筆鑑測資料");
+                        d.Add("status", "[鑑測站]已有該員人工鑑測資料，且未上傳");
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
@@ -227,7 +236,7 @@ public class GetValueByCode : IHttpHandler
                     }
                     else
                     {
-                        d.Add("status","");
+                        d.Add("status", "");
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
@@ -276,13 +285,13 @@ public class GetValueByCode : IHttpHandler
                         }
                         json = "{\"status\":\"" + _result + "\"}";
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
 
                     }
                     break;
 
-                case "player" :
+                case "player":
                     d.Add("id", value);
                     dt = du.getDataTableByText("select id from player where id = @id", d);
                     if (dt.Rows.Count == 0)
@@ -325,13 +334,27 @@ public class GetValueByCode : IHttpHandler
                     try
                     {
                         du.executeNonQueryByText("update center set limit = " + value + " where center_code = '" + context.Request.Params["sid"] + "'");
-                        Lib.SysSetting.AddLog("鑑測站", context.Request.Params["who"], " 鑑測站 (代碼 " + context.Request.Params["sid"] + ") 人數限制被更改為 " + value , DateTime.Now);
+                        Lib.SysSetting.AddLog("鑑測站", context.Request.Params["who"], " 鑑測站 (代碼 " + context.Request.Params["sid"] + ") 人數限制被更改為 " + value, DateTime.Now);
                         json = "{\"status\":\"done\"}";
                     }
                     catch (Exception ex)
                     {
                         json = "{\"status\":\"" + ex.Message + "\"}";
                     }
+                    break;
+                case "checkScorreKeyin"://2018-11-7檢查鑑測站有無人工鑑測成績且未上傳之資料
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("id", context.Request.Params["id"]);
+                    dt = du.getDataTableByText(@"Select * from Result where id = @id and result='111'", dic);
+                    if (dt.Rows.Count == 0)
+                    {
+                        d.Add("status", "ok");
+                    }
+                    else
+                    {
+                        d.Add("status", "身份證字號：["+context.Request.Params["id"]+"]已有1筆人工鑑測成績，請至「人工成績管理」查詢。");
+                    }
+                    json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
                 default:
                     break;

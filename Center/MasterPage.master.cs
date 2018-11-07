@@ -84,6 +84,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         MenuItem item12 = new MenuItem("系統維護");
                         item12.NavigateUrl = "~/SysAdmin.aspx";
                         Menu1.Items.Add(item12);
+                        MenuItem item27 = new MenuItem("伺服器狀態");
+                        item27.NavigateUrl = "~/108_CenterStatus.aspx";
+                        Menu2.Items.Add(item27);
                         break;
                     case User_Role.CenterOfficer:
                         MenuItem item9 = new MenuItem("個人資訊設定");
@@ -110,6 +113,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         MenuItem item26 = new MenuItem("數據資料檢視");
                         item26.NavigateUrl = "~/107_Result_Chart.aspx";
                         Menu1.Items.Add(item26);
+                        MenuItem item28 = new MenuItem("伺服器狀態");
+                        item28.NavigateUrl = "~/108_CenterStatus.aspx";
+                        Menu2.Items.Add(item28);
                         break;
                     default:
                         break;
