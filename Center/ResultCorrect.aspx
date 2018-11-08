@@ -1,13 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ResultCorrect.aspx.cs" Inherits="ResultCorrect" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <head>
     <link rel="Stylesheet" type="text/css" href="StyleSheet.css" />
     <script type="text/javascript" src="Script/jquery-1.3.2-vsdoc2.js"></script>
     <script type="text/javascript">
-        //if (typeof (JSON) == 'undefined') { //Fix IE JSON
-        //    $.getScript('JS/json2.js');
-        //}
+        if (document.querySelector) {//不支援ie7
+            //alert("8+");
+            if (typeof (JSON) == 'undefined') { //Fix IE JSON
+                $.getScript('JS/json2.js');
+            }
+        }
+        else {
+            //alert("7-");
+        }
     </script>
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -18,34 +23,7 @@
         }
         
     </script>
-    <script type="text/javascript">
-        //function Check_note() {
-        //    alert('1234');
-        //    var sit = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_sit_note').value;
-        //    var push = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_push_note').value;
-        //    var run = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_run_note').value;
-        //    alert('5678');
-        //    alert(sit);
-        //    alert(push);
-        //    alert(run);
-            
-        //}
-        
-    </script>
-    <script type="text/javascript">
-        //$(function () {
-        //    $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_Button1').click(function () {
-        //        alert('1234');
-        //        var sit = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_sit_note').value;
-        //        var push = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_push_note').value;
-        //        var run = document.getElementById('ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_run_note').value;
-        //        alert('5678');
-        //        alert(sit);
-        //        alert(push);
-        //        alert(run);
-        //    })
-        //})
-    </script>
+    
     <script type="text/javascript">
         //支援IE寫法
         function CheckNum() {
@@ -249,26 +227,6 @@
                 alert('請先查詢成績!!');
             }
             
-
-
-
-            //if (
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_sit1").value) |
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_sit2").value) |
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_push1").value) |
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_push2").value) |
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_run1").value) |
-            //    isNaN(document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_txb_run2").value)
-            //    )
-            //{
-            //    document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_check_num").value = '0';
-            //    alert('成績輸入包含錯誤字元，請重新輸入!!');
-            //}
-            //else
-            //{
-            //    document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_check_num").value = '1';
-            //    //alert('正確')
-            //}
         }
     </script>
         <script type="text/javascript">
@@ -299,21 +257,18 @@
             margin-left: 0px;
         }
     </style>
-        
-   </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     &nbsp;<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <ajaxToolkit:TabContainer id="TabContainer1" runat="server" CssClass="ajax__tab_yuitabview-theme">
 <ajaxToolkit:TabPanel ID="TabPanel1" runat="server" HeaderText="成績補正">
 <ContentTemplate>
-    <body >
 <div>
     
 <table>
 
 <tr>
-<td>身分證號 </td><td><input type="text" id="id" runat="server" maxlength="10" style="text-transform:uppercase;" autofocus="autofocus" />
+<td>身分證號 </td><td><input type="text" id="id1" runat="server" maxlength="10" style="text-transform:uppercase;" autofocus="autofocus" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="Button1" runat="server"
         Text="搜尋" onclick="Button1_Click" Font-Bold="True" Font-Size="Large" ForeColor="Blue" Font-Names="標楷體" style="cursor:pointer;background-color:#f0e68c" />
@@ -370,8 +325,6 @@
 </tr>
 </table>
 </div>
-        
-        </body>
 </ContentTemplate>
 </ajaxToolkit:TabPanel>
 

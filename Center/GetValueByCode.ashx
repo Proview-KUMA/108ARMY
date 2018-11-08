@@ -168,8 +168,10 @@ public class GetValueByCode : IHttpHandler
                     paralist.Add("date", context.Request.Params["date"]);
                     paralist.Add("memo", context.Request.Params["memo"]);
                     paralist.Add("age", Lib.SysSetting.ConvertAge(Lib.SysSetting.ToWorldDate(context.Request.Params["birth"].Replace('-', '/')), Convert.ToDateTime(context.Request.Params["date"])).ToString());
-                    //paralist.Add("center_code", Lib.SysSetting.CenterCode);
-                    paralist.Add("center_code", "10");
+                    ////鑑測站使用
+                    paralist.Add("center_code", Lib.SysSetting.CenterCode);
+                    //公司測試用，中心代碼
+                    //paralist.Add("center_code", "10");
                     dt = du.getDataTableByText(@"Select * from Result where id = @id and result='111'", paralist);
                     if (dt.Rows.Count == 0)
                     {
@@ -202,7 +204,7 @@ public class GetValueByCode : IHttpHandler
                     }
                     else
                     {
-                        d.Add("status", "[鑑測站]已有該員人工鑑測資料，且未上傳");
+                        d.Add("status", "身份證字號：["+context.Request.Params["id"]+"]已有1筆人工鑑測成績，請至「人工成績管理」查詢。");
                     }
                     json = Lib.SysSetting.GetJsonFormatData(d);
                     break;
@@ -248,14 +250,6 @@ public class GetValueByCode : IHttpHandler
                     string[] operater = { "/" };
                     string[] info = _v.Split(operater, StringSplitOptions.None);
                     _date = (Convert.ToInt32(info[0]) + 1911).ToString() + "/" + info[1] + "/" + info[2];
-                    //try
-                    //{
-                    //    _date = (Convert.ToInt32(_v.Substring(0, 2)) + 1911).ToString() + _v.Substring(2, _v.Length - 2);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    _date = (Convert.ToInt32(_v.Substring(0, 3)) + 1911).ToString() + _v.Substring(3, _v.Length - 3);
-                    //}
                     d.Add("date", Convert.ToDateTime(_date));
                     dt = du.getDataTableBysp("GetCenterLimit", d);
                     //json = _date;
@@ -342,7 +336,7 @@ public class GetValueByCode : IHttpHandler
                         json = "{\"status\":\"" + ex.Message + "\"}";
                     }
                     break;
-                case "checkScorreKeyin"://2018-11-7檢查鑑測站有無人工鑑測成績且未上傳之資料
+                case "checkScoreKeyin"://2018-11-7檢查鑑測站有無人工鑑測成績且未上傳之資料
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("id", context.Request.Params["id"]);
                     dt = du.getDataTableByText(@"Select * from Result where id = @id and result='111'", dic);

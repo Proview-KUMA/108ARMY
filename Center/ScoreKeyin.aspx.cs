@@ -490,7 +490,7 @@ public partial class ScoreKeyin : System.Web.UI.Page
                     dic.Add("update_time", DateTime.Now);
 
                     Lib.SysSetting.AddResultCorrectLog(dic);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('補正成功!!');", true);
                     id_2.Value = "";
                     //situps.Value = "";
                     //pushups.Value = "";

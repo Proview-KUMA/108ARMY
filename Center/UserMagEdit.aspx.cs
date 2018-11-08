@@ -191,7 +191,7 @@ public partial class UserMagEdit : System.Web.UI.Page
                 {
                     MainScoreWS.WebService2 mainWebSv = new MainScoreWS.WebService2();
                     DataTable dt = new DataTable();
-                    DateTime checktime = DateTime.Now.AddDays(366);
+                    DateTime checktime = DateTime.Now.AddDays(600);//檢查日期+600天，防止檢查到同年份有報進資料
                     dt = mainWebSv.QueryPlayer(txb_checkId.Text, checktime.ToShortDateString());
                     if (dt.Rows.Count > 0)
                     {

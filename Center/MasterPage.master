@@ -25,6 +25,7 @@
         <asp:Label ID="user" runat="server" Text="Label"></asp:Label>
         <asp:HyperLink ID="logout" runat="server" NavigateUrl="~/Logout.aspx" Text="登出" ForeColor="Blue"></asp:HyperLink> 
         </div>
+    <br />
         <div align="left" 
         style="background-image: url('images/top_pic_center_9.jpg'); background-repeat:no-repeat; height: 136px;background-position:center; width: 100%">
             

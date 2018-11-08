@@ -88,7 +88,7 @@ public partial class DownLoad : System.Web.UI.Page
             local.executeNonQueryByText("insert into downloadlog values (@date,@log,@account)", d);
         }
         //呼叫取得近七日測考人數方法
-        Update_7DayTable();
+        //Update_7DayTable();
     }
     private static void Update_7DayTable()
     {

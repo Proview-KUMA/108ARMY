@@ -43,7 +43,7 @@ public partial class ResultCorrect : System.Web.UI.Page
         Dictionary<string, object> d = new Dictionary<string, object>();
         d.Clear();
         DateTime date = DateTime.Today;
-        d.Add("id", id.Value.ToUpper());
+        d.Add("id", id1.Value.ToUpper());
         d.Add("date", date);
         DataTable dt = du.getDataTableBysp("GetResultCorrect", d);
         if (dt.Rows.Count == 1)
@@ -73,7 +73,7 @@ public partial class ResultCorrect : System.Web.UI.Page
             push_ups_name.Text = dt.Rows[0]["push_ups_name"].ToString();
             run_name.Text = dt.Rows[0]["run_name"].ToString();
             dateValue.Value = Convert.ToDateTime(dt.Rows[0]["date"].ToString()).ToShortDateString();
-            checkid.Value = id.Value;
+            checkid.Value = id1.Value;
             //取得三項成績的次數或秒數
             if (!string.IsNullOrEmpty(dt.Rows[0]["sit_ups"].ToString()))
             {
@@ -214,7 +214,7 @@ public partial class ResultCorrect : System.Web.UI.Page
             Dictionary<string, object> d = new Dictionary<string, object>();
             d.Clear();
             //判斷身份證字號是否正確
-            if (id.Value != "" && id.Value == checkid.Value)
+            if (id1.Value != "" && id1.Value == checkid.Value)
             {
                 //判斷第一項是用次數還是秒
                 //使用分秒
@@ -414,7 +414,7 @@ public partial class ResultCorrect : System.Web.UI.Page
 
                 }
 
-                d.Add("id", id.Value.ToUpper());
+                d.Add("id", id1.Value.ToUpper());
                 d.Add("date", Convert.ToDateTime(dateValue.Value));
                 try
                 {
@@ -422,7 +422,7 @@ public partial class ResultCorrect : System.Web.UI.Page
 
                     //2017-1-26再重新計算一次成績
                     Dictionary<string, object> d1 = new Dictionary<string, object>();
-                    d1.Add("id", id.Value.ToUpper());
+                    d1.Add("id", id1.Value.ToUpper());
                     d1.Add("date", Convert.ToDateTime(dateValue.Value));
                     //2018-10-11新增異動時間點
                     DateTime ChangeDate = new DateTime(2018, 12, 31, 23, 59, 59);
@@ -441,7 +441,7 @@ public partial class ResultCorrect : System.Web.UI.Page
                     Account_c acc = (Account_c)Session["account"];
                     //Lib.SysSetting.AddLog("成績補正", acc.Account, "補正對象: (" + id.Value + ") 補正前成績為(" + sit_ups_name.Text + ": " + old_situps + "次/秒, " + push_ups_name.Text + ": " + old_pushups + "次/秒, " + run_name.Text + ": " + old_run + "次/秒)" + "補正後成績為(" + sit_ups_name.Text + ": " + sit_value + "次/秒, " + push_ups_name.Text + ": " + push_value + "次/秒, " + run_name.Text + ": " + run_value + "次/秒)", DateTime.Now);
                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("id", id.Value.ToUpper());
+                    dic.Add("id", id1.Value.ToUpper());
                     dic.Add("name", name.Value);
                     dic.Add("date", Convert.ToDateTime(dateValue.Value));
                     if (!string.IsNullOrEmpty(old_situps))
@@ -478,7 +478,7 @@ public partial class ResultCorrect : System.Web.UI.Page
 
                     Lib.SysSetting.AddResultCorrectLog(dic);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
-                    id.Value = "";
+                    id1.Value = "";
                     //situps.Value = "";
                     //pushups.Value = "";
                     //run.Value = "";
@@ -598,4 +598,6 @@ public partial class ResultCorrect : System.Web.UI.Page
         }
         
     }
+
+    
 }

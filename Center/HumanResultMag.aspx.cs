@@ -96,8 +96,8 @@ public partial class PresentResultMag : System.Web.UI.Page
     protected void falseUpload_OnClick(object sender, EventArgs e)
     {
         Lib.DataUtility du = new Lib.DataUtility();
+        du.executeNonQueryByText("update result set status='103' where status='105' and result='111'");
         DataTable dt = du.getDataTableByText("select * from result where status in (@status,'105') and result = '111'", "status", "103");
-        //DataTable dt = du.getDataTableByText("select * from result where status = @status ", "status", "103"); // 未上傳不合格
         if (dt.Rows.Count == 0)
         {
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('目前沒有成績');", true);
