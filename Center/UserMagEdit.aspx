@@ -231,7 +231,7 @@
 
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server"
                         ConnectionString="<%$ ConnectionStrings:Center %>"
-                        SelectCommand="SELECT [account] FROM [Account_c] where [role_code] in ('3','4')"></asp:SqlDataSource>
+                        SelectCommand="SELECT [account] FROM [Account_c] where [role_code] in ('3','4') and [account] not in('proview3','proview4')"></asp:SqlDataSource>
                 </div>
                 <div>
                     <table id="update">

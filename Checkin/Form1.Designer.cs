@@ -34,6 +34,7 @@
             this.成績結算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.即時數據檢視ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.數據查詢ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.基本資料補正ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -98,7 +99,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_Change_3K = new System.Windows.Forms.Button();
-            this.基本資料補正ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -166,6 +166,13 @@
             this.數據查詢ToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
             this.數據查詢ToolStripMenuItem.Text = "歷史數據查詢";
             this.數據查詢ToolStripMenuItem.Click += new System.EventHandler(this.數據查詢ToolStripMenuItem_Click);
+            // 
+            // 基本資料補正ToolStripMenuItem
+            // 
+            this.基本資料補正ToolStripMenuItem.Name = "基本資料補正ToolStripMenuItem";
+            this.基本資料補正ToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.基本資料補正ToolStripMenuItem.Text = "基本資料補正";
+            this.基本資料補正ToolStripMenuItem.Click += new System.EventHandler(this.基本資料補正ToolStripMenuItem_Click);
             // 
             // groupBox1
             // 
@@ -853,13 +860,6 @@
             this.btn_Change_3K.UseVisualStyleBackColor = true;
             this.btn_Change_3K.Click += new System.EventHandler(this.btn_Change_3K_Click);
             // 
-            // 基本資料補正ToolStripMenuItem
-            // 
-            this.基本資料補正ToolStripMenuItem.Name = "基本資料補正ToolStripMenuItem";
-            this.基本資料補正ToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
-            this.基本資料補正ToolStripMenuItem.Text = "基本資料補正";
-            this.基本資料補正ToolStripMenuItem.Click += new System.EventHandler(this.基本資料補正ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -878,7 +878,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "鑑測檢錄系統 Ver 3.3.0.0";
+            this.Text = "鑑測檢錄系統 Ver 108.1.0.0";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

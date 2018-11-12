@@ -9,7 +9,7 @@
 -- This block of comments will not be included in
 -- the definition of the procedure.
 -- ================================================
-use Main
+use Center
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,12 +17,12 @@ GO
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Description:	<取得成績異動記錄>
 -- =============================================
-CREATE PROCEDURE Ex108_GetNear60DayResult 
+CREATE PROCEDURE Ex108_GetResultCorrectLog 
 	-- Add the parameters for the stored procedure here
 	(
-	@id nvarchar(10)
+	@date nvarchar(12)
 	)
 AS
 BEGIN
@@ -31,7 +31,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select sid,id,name,CONVERT(nvarchar(10),date,111)as 'date',(select meaning  from StatusCode where code = status)as 'status' from Result
-    where id=@id and date>=GETDATE()-62 and status='203' order by date asc
+	select id,name,CONVERT(varchar,date,111)as 'date',old_sit_ups,old_push_ups,old_run,new_sit_ups,new_push_ups,new_run,
+account,account_id,(CONVERT(varchar,update_time,111)+'   '+CONVERT(varchar,update_time,108))as 'update_time' from ResultCorrectLog_108 where date=@date order by id
 END
 GO

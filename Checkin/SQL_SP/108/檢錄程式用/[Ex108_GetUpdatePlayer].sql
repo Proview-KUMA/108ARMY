@@ -9,7 +9,7 @@
 -- This block of comments will not be included in
 -- the definition of the procedure.
 -- ================================================
-use Main
+USE Center
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,12 +17,12 @@ GO
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Description:	查詢完成檢錄但未上傳的人員資料，更新生日、姓名用
 -- =============================================
-CREATE PROCEDURE Ex108_GetNear60DayResult 
+CREATE PROCEDURE Ex108_GetUpdatePlayer 
 	-- Add the parameters for the stored procedure here
 	(
-	@id nvarchar(10)
+	@id varchar(10)
 	)
 AS
 BEGIN
@@ -31,7 +31,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	select sid,id,name,CONVERT(nvarchar(10),date,111)as 'date',(select meaning  from StatusCode where code = status)as 'status' from Result
-    where id=@id and date>=GETDATE()-62 and status='203' order by date asc
+	select id,name,birth,age,status,(select meaning from StatusCode where StatusCode.code=Result.status)as 'status_name',date from Result
+    where id=@id and status in('001','102','103','104','105','106') order by date desc
 END
 GO

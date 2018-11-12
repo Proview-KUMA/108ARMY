@@ -267,8 +267,6 @@ namespace ScoreClose
                         dt = du.getDataTableBysp(@"Ex106_CalResultByLFTag", d);
                     }
                     
-
-
                     if (dt.Rows.Count == 1)
                     {
                         if (dt.Columns.Contains("error"))

@@ -77,10 +77,10 @@ namespace InI
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    Value_Y[Convert.ToInt32(dt.Rows[i]["month"].ToString())-1] = Convert.ToInt32(dt.Rows[i]["count"].ToString());
+                    Value_Y[Convert.ToInt32(dt.Rows[i]["month"].ToString()) - 1] = Convert.ToInt32(dt.Rows[i]["count"].ToString());
                 }
             }
-            
+
 
             //建立物件
             chart_RealTest.ChartAreas.Add("ChartAreas1");//建立圖表區塊
@@ -164,8 +164,8 @@ namespace InI
                     float total, pass, pass_rate;
                     total = Value_Y[i] + Value_Y2[i];
                     pass = Value_Y[i];
-                    pass_rate = (pass / total)*100;
-                    Value_X[i] += Environment.NewLine + "("+pass_rate.ToString("#0.00")+"%)";
+                    pass_rate = (pass / total) * 100;
+                    Value_X[i] += Environment.NewLine + "(" + pass_rate.ToString("#0.00") + "%)";
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace InI
             }
 
 
-                chart_PassRate.ChartAreas.Add("ChartAreas1");//建立圖表區塊
+            chart_PassRate.ChartAreas.Add("ChartAreas1");//建立圖表區塊
             chart_PassRate.Series.Add("Series1");//建立圖表
             chart_PassRate.Series.Add("Series2");//建立圖表
             chart_PassRate.Legends.Add("Legends1");//建立圖例
@@ -187,7 +187,7 @@ namespace InI
             chart_PassRate.ChartAreas["ChartAreas1"].AxisY.TitleForeColor = Color.Red;
             chart_PassRate.ChartAreas["ChartAreas1"].AxisX.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
             chart_PassRate.ChartAreas["ChartAreas1"].AxisY.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
-            chart_PassRate.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            chart_PassRate.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 10, FontStyle.Bold);
             chart_PassRate.ChartAreas["ChartAreas1"].AxisY.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
             //加入下二行將x軸全部標籤顯示
             chart_PassRate.ChartAreas["ChartAreas1"].AxisX.LabelStyle.IsStaggered = true;
@@ -226,7 +226,7 @@ namespace InI
             int[] Value_Y;
             int[] Value_Y2;
             Value_X = new string[12] { "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" };
-            
+
             Value_Y = new int[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             Value_Y2 = new int[12] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -287,7 +287,7 @@ namespace InI
             chart_StandartReplace.ChartAreas["ChartAreas1"].AxisY.TitleForeColor = Color.Red;
             chart_StandartReplace.ChartAreas["ChartAreas1"].AxisX.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
             chart_StandartReplace.ChartAreas["ChartAreas1"].AxisY.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
-            chart_StandartReplace.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            chart_StandartReplace.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 10, FontStyle.Bold);
             chart_StandartReplace.ChartAreas["ChartAreas1"].AxisY.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
             //加入下二行將x軸全部標籤顯示
             chart_StandartReplace.ChartAreas["ChartAreas1"].AxisX.LabelStyle.IsStaggered = true;
@@ -372,18 +372,18 @@ namespace InI
             }
         }
         //2、執行SP且帶有參數，查詢資料表
-        delegate DataTable GetTable_Dic_delgate(string SpName , Dictionary<string,object> dic);
+        delegate DataTable GetTable_Dic_delgate(string SpName, Dictionary<string, object> dic);
         private DataTable Do_GetTable_Dic(string SpName, Dictionary<string, object> dic)
         {
             DataTable dt = new DataTable();
             IAsyncResult result;
             GetTable_Dic_delgate gettb;
             gettb = new GetTable_Dic_delgate(GetTable_Dic);
-            result = gettb.BeginInvoke(SpName,dic, null, null);
+            result = gettb.BeginInvoke(SpName, dic, null, null);
             dt = gettb.EndInvoke(result);
             return dt;
         }
-        private DataTable GetTable_Dic(string SpName , Dictionary<string,object> dic)
+        private DataTable GetTable_Dic(string SpName, Dictionary<string, object> dic)
         {
             Lib.DataUtility du = new DataUtility();
             DataTable dt = new DataTable();
@@ -398,6 +398,6 @@ namespace InI
             }
         }
         #endregion
-        
+
     }
 }

@@ -6,7 +6,7 @@ using System.Resources;
 // 組件的一般資訊是由下列的屬性集控制。
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
-[assembly: AssemblyTitle("鑑測檢錄系統(106年成績換算新標準)")]
+[assembly: AssemblyTitle("鑑測檢錄系統(108年)")]
 [assembly: AssemblyDescription("檢核個人資訊與生理資訊量測")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("柏通股份有限公司")]
@@ -34,5 +34,5 @@ using System.Resources;
 // 指定為預設值:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.2.0.0")]
-[assembly: AssemblyFileVersion("3.3.0.0")]
+[assembly: AssemblyFileVersion("108.1.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("zh-TW")]

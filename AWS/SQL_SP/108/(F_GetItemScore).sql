@@ -19,7 +19,7 @@ GO
 -- Create date: <Create Date, ,>
 -- Description:	<Description, ,>
 -- =============================================
-alter FUNCTION F_GetItemScore 
+CREATE FUNCTION F_GetItemScore 
 (
 	@type varchar(2),--傳入項次
 	@memo varchar(1),--傳入項目
