@@ -307,8 +307,9 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td colspan="3">
-                                    <input id="updateBtn" type="button" value="確定更新" /><input id="deleteBtn" type="button" value="刪除" /></td>
+                                <td colspan="2">
+                                    <input id="updateBtn" type="button" value="確定更新" /></td>
+                                <td><input id="deleteBtn" type="button" value="刪除" /></td>
                             </tr>
                         </tbody>
                     </table>

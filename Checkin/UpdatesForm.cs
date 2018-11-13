@@ -86,7 +86,7 @@ namespace InI
             New_Birth = dtp_Birth.Value;
             New_Age = lab_Age.Text.Trim();
             string AlertMsg = string.Empty;
-            if(New_Name != Old_Name || New_Birth.ToShortDateString() != Old_Birth.ToShortDateString() || New_Age != Old_Age)
+            if (New_Name != Old_Name || New_Birth.ToShortDateString() != Old_Birth.ToShortDateString() || New_Age != Old_Age)
             {
                 AlertMsg += "請確認異動資料如下：" + Environment.NewLine;
                 if (New_Name != Old_Name)
@@ -94,7 +94,7 @@ namespace InI
                 if (New_Birth.ToShortDateString() != Old_Birth.ToShortDateString())
                     AlertMsg += "生日：[" + Old_Birth.ToShortDateString() + "] --> [" + New_Birth.ToShortDateString() + "]" + Environment.NewLine;
                 if (New_Age != Old_Age)
-                    AlertMsg += "年齡：[" + Old_Age + "] --> [" + New_Age + "]" + Environment.NewLine;
+                    AlertMsg += "年齡：[" + Old_Age + "] --> [" + New_Age + "]" + Environment.NewLine + Environment.NewLine + "(年齡若有異動，系統將重新結算成績)" + Environment.NewLine;
                 DialogResult dialogResult = MessageBox.Show(AlertMsg, "確認更新資料", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -131,10 +131,10 @@ namespace InI
                         btn_InqData_Click(btn_InqData, e);//再執行一次查詢
                         MessageBox.Show("資料更新成功!!");
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show("資料更新失敗，錯誤訊息如下：" + Environment.NewLine + ex.Message);
-                    }          
+                    }
                 }
             }
             else
@@ -161,6 +161,6 @@ namespace InI
             this.Close();
         }
 
-        
+
     }
 }

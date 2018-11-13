@@ -10,11 +10,9 @@ public partial class UserMagEdit : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
         if (!Page.IsPostBack)
         {
-
+            
         }
         if (Page.IsPostBack)
         {
@@ -114,6 +112,7 @@ public partial class UserMagEdit : System.Web.UI.Page
                         _txtFun.Text = "";
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('成功刪除');", true);
                         DropDownList1.Items.Remove(DropDownList1.SelectedItem);
+                        DropDownList1_OnDataBound(DropDownList1, e);
                         #endregion
                         break;
                     default:
@@ -154,7 +153,7 @@ public partial class UserMagEdit : System.Web.UI.Page
 
     protected void DropDownList1_OnDataBound(object sender, EventArgs e)
     {
-        if (DropDownList1.Items.Count == 1)
+        if (DropDownList1.Items.Count > 0)
         {
             tabconatiner.ActiveTabIndex = 1;
             Lib.DataUtility du = new Lib.DataUtility();
@@ -169,7 +168,7 @@ public partial class UserMagEdit : System.Web.UI.Page
             _txtCell.Text = dt.Rows[0]["cellphone"].ToString();
             _txtIP.Text = dt.Rows[0]["ip"].ToString();
         }
-
+        tabconatiner.ActiveTabIndex = 0;
     }
 
     void Page_Error(object sender, EventArgs e)

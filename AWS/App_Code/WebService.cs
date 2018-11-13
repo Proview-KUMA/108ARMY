@@ -40,7 +40,7 @@ public class WebService : System.Web.Services.WebService {
         DateTime _date = DateTime.Now.Date.AddDays(1);
         DateTime deadline = _date.AddHours((-Lib.SysSetting.reserveTimeUnit.TotalHours));
         DataTable dt = new DataTable();
-        if (DateTime.Now < deadline)
+        if (DateTime.Now < deadline)//如果超過今天中午12點就可以下載明天(含之前)未下載的資料
         {
             _date = DateTime.Now.Date;
         }

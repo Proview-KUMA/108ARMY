@@ -94,7 +94,7 @@ namespace InI
             chart_RealTest.ChartAreas["ChartAreas1"].AxisY.TitleForeColor = Color.Red;
             chart_RealTest.ChartAreas["ChartAreas1"].AxisX.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
             chart_RealTest.ChartAreas["ChartAreas1"].AxisY.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
-            chart_RealTest.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            chart_RealTest.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 10, FontStyle.Bold);
             chart_RealTest.ChartAreas["ChartAreas1"].AxisY.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
             //加入下二行將x軸全部標籤顯示
             chart_RealTest.ChartAreas["ChartAreas1"].AxisX.LabelStyle.IsStaggered = true;
@@ -104,7 +104,7 @@ namespace InI
             //chart_RealTest.Legends["Legends1"].DockedToChartArea = "ChartAreas1";//顯示在圖表內
             chart_RealTest.Legends["Legends1"].Docking = Docking.Top;//顯示位置上中下//上
             chart_RealTest.Legends["Legends1"].Alignment = StringAlignment.Near;//顯示位置左中右//左
-            chart_RealTest.Legends["Legends1"].Font = new Font("微軟正黑體", 14, FontStyle.Bold);
+            chart_RealTest.Legends["Legends1"].Font = new Font("微軟正黑體", 12, FontStyle.Bold);
             chart_RealTest.Legends["Legends1"].BackColor = Color.Transparent;
             //chart_RealTest.Legends["Legends1"].Title = cbb_YearTab1.Text+"年";
             //chart_RealTest.Legends["Legends1"].TitleFont = new Font("微軟正黑體", 12, FontStyle.Bold);
@@ -340,7 +340,7 @@ namespace InI
                 cbb_YearTab1.SelectedIndex = years.Length - 1;
                 cbb_YearTab2.SelectedIndex = years.Length - 1;
                 cbb_YearTab3.SelectedIndex = years.Length - 1;
-            }
+            }       
         }
         #endregion
 
@@ -397,7 +397,7 @@ namespace InI
                 return dt;
             }
         }
-        #endregion
-
+        #endregion       
     }
+    
 }
