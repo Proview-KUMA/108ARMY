@@ -488,6 +488,7 @@ public partial class ScoreKeyin : System.Web.UI.Page
                     else
                         dic.Add("account_id", DBNull.Value);
                     dic.Add("update_time", DateTime.Now);
+                    dic.Add("type", "人工鑑測補正");
 
                     Lib.SysSetting.AddResultCorrectLog(dic);
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('補正成功!!');", true);

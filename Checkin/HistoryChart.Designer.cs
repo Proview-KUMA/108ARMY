@@ -44,6 +44,11 @@
             this.cbb_YearTab3 = new System.Windows.Forms.ComboBox();
             this.btn_InqTab3 = new System.Windows.Forms.Button();
             this.chart_StandartReplace = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbb_YearTab4 = new System.Windows.Forms.ComboBox();
+            this.btn_InqTab4 = new System.Windows.Forms.Button();
+            this.chart_RankTest = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_RealTest)).BeginInit();
@@ -51,6 +56,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart_PassRate)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_StandartReplace)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_RankTest)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -58,6 +65,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Font = new System.Drawing.Font("微軟正黑體", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -214,6 +222,55 @@
             this.chart_StandartReplace.TabIndex = 5;
             this.chart_StandartReplace.Text = "chart1";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label4);
+            this.tabPage4.Controls.Add(this.cbb_YearTab4);
+            this.tabPage4.Controls.Add(this.btn_InqTab4);
+            this.tabPage4.Controls.Add(this.chart_RankTest);
+            this.tabPage4.Location = new System.Drawing.Point(4, 31);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(842, 605);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "每年官士兵到測數";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 22);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "年份：";
+            // 
+            // cbb_YearTab4
+            // 
+            this.cbb_YearTab4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbb_YearTab4.FormattingEnabled = true;
+            this.cbb_YearTab4.Location = new System.Drawing.Point(73, 6);
+            this.cbb_YearTab4.Name = "cbb_YearTab4";
+            this.cbb_YearTab4.Size = new System.Drawing.Size(130, 30);
+            this.cbb_YearTab4.TabIndex = 9;
+            // 
+            // btn_InqTab4
+            // 
+            this.btn_InqTab4.Location = new System.Drawing.Point(271, 4);
+            this.btn_InqTab4.Name = "btn_InqTab4";
+            this.btn_InqTab4.Size = new System.Drawing.Size(135, 32);
+            this.btn_InqTab4.TabIndex = 8;
+            this.btn_InqTab4.Text = "查詢";
+            this.btn_InqTab4.UseVisualStyleBackColor = true;
+            this.btn_InqTab4.Click += new System.EventHandler(this.btn_InqTab4_Click);
+            // 
+            // chart_RankTest
+            // 
+            this.chart_RankTest.Location = new System.Drawing.Point(7, 45);
+            this.chart_RankTest.Name = "chart_RankTest";
+            this.chart_RankTest.Size = new System.Drawing.Size(825, 550);
+            this.chart_RankTest.TabIndex = 7;
+            this.chart_RankTest.Text = "chart1";
+            // 
             // HistoryChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -235,6 +292,9 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_StandartReplace)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_RankTest)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -257,5 +317,10 @@
         private System.Windows.Forms.ComboBox cbb_YearTab2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbb_YearTab3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbb_YearTab4;
+        private System.Windows.Forms.Button btn_InqTab4;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart_RankTest;
     }
 }

@@ -241,11 +241,11 @@
 <table>
 <tr>
 <td>身分證號</td><td><input type="text" id="id" runat="server" maxlength="10" style="text-transform:uppercase;" autofocus="autofocus"/>
-    &nbsp;&nbsp;<asp:Button ID="Button1" runat="server"
+    &nbsp;&nbsp;&nbsp;<asp:Button ID="Button1" runat="server"
         Text="搜尋" onclick="Button1_Click" Font-Bold="True" Font-Size="Large" ForeColor="Blue" Font-Names="標楷體" style="cursor:pointer;background-color:#f0e68c" /></td>
 </tr>
 <tr>
-<td>姓名</td><td><input type="text" id="name" runat="server" readonly="readonly" disabled="true" style="background-color:#CCCCFF;color:red;border-style:groove" /> &nbsp;&nbsp;</td>
+<td>姓名</td><td><input type="text" id="name" runat="server" readonly="readonly" disabled="disabled" style="background-color:#CCCCFF;color:red;border-style:groove" /> &nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
 <td><asp:Label ID="sit_ups_name" runat="server"></asp:Label></td>
@@ -282,7 +282,7 @@
 </tr>
 <tr>
 <td colspan="2"><asp:Button ID="Button2" runat="server" Text="確認替代項目成績" 
-        Onclick="Button2_Click" OnClientClick="CheckNum()" Font-Bold="True" Font-Size="Large" ForeColor="Red" Font-Names="標楷體" style="cursor:pointer;background-color:#7fffd4" /><asp:HiddenField ID="dateValue" runat="server" />
+        Onclick="Button2_Click" OnClientClick="CheckNum()" Font-Bold="True" Font-Size="Large" ForeColor="Red" Font-Names="標楷體" style="cursor:pointer;background-color:#7fffd4" Visible="False" /><asp:HiddenField ID="dateValue" runat="server" />
     <asp:HiddenField ID="checkid" runat="server" />
     <asp:HiddenField ID="check_num" runat="server" />
 </td>

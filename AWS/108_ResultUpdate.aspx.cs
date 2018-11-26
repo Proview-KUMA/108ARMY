@@ -10,6 +10,7 @@ using Lib;
 public partial class _108_ResultUpdate : System.Web.UI.Page
 {
     static string Sid = string.Empty;
+    static string Id = string.Empty;
     static string Name = string.Empty;
     static string Birth = string.Empty;
     static string Age = string.Empty;
@@ -60,6 +61,8 @@ public partial class _108_ResultUpdate : System.Web.UI.Page
                     if (dt.Rows.Count > 0)
                     {
                         //個人基本資料
+                        if (!string.IsNullOrEmpty(dt.Rows[0]["id"].ToString()))
+                            Id = dt.Rows[0]["id"].ToString();
                         if (!string.IsNullOrEmpty(dt.Rows[0]["name"].ToString()))
                         {
                             Name = dt.Rows[0]["name"].ToString();
@@ -392,6 +395,10 @@ public partial class _108_ResultUpdate : System.Web.UI.Page
                         du.executeNonQueryBysp("Ex108_UpdateResultData", d);
                         //寫入log
                         UpdateLog = string.Empty;
+                        if (!string.IsNullOrEmpty(Sid))
+                            UpdateLog += "sid-" + Sid + ',';
+                        if (!string.IsNullOrEmpty(Id))
+                            UpdateLog += "id-" + Id + ',';
                         if (Old_Name != Name)
                             UpdateLog += "名[" + Old_Name + "," + Name + "]";
                         if (Old_Birth != Birth)

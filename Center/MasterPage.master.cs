@@ -87,6 +87,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         MenuItem item27 = new MenuItem("伺服器狀態");
                         item27.NavigateUrl = "~/108_CenterStatus.aspx";
                         Menu2.Items.Add(item27);
+                        MenuItem item29 = new MenuItem("成績試算");
+                        item29.NavigateUrl = "~/108_ScoreTrial.aspx";
+                        Menu2.Items.Add(item29);
                         break;
                     case User_Role.CenterOfficer:
                         MenuItem item9 = new MenuItem("個人資訊設定");
@@ -108,7 +111,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         item20.NavigateUrl = "~/ReplaceItemScore.aspx";
                         Menu1.Items.Add(item20);
                         MenuItem item23 = new MenuItem("成績試算");
-                        item23.NavigateUrl = "~/ScoreTrial.aspx";
+                        item23.NavigateUrl = "~/108_ScoreTrial.aspx";
                         Menu1.Items.Add(item23);
                         MenuItem item26 = new MenuItem("數據資料檢視");
                         item26.NavigateUrl = "~/107_Result_Chart.aspx";

@@ -7,13 +7,15 @@
     <script type="text/javascript" src="Script/Common.js"></script>
     <script type="text/javascript" language="javascript">
         function confirm_user() {
-            if (confirm("確認結算今日剩餘人員之成績?") == true) {
+            if (confirm("確認結束今日鑑測工作，並結算剩餘人員之成績?") == true) {
                 var btn = document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel6_btn_CalculationResult");
                 btn.innerText = "結算中，請稍候…";
                 return true;
             }         
-            else
+            else {
                 return false;
+            }
+                
         }
         //接收子視窗回傳值要執行的方法。
         function outside(count) {
@@ -269,7 +271,7 @@
                 <br />
                 <div>
                     <asp:Button ID="Button6" runat="server" Text="更新" OnClick="Button6_OnClick" />
-                    <asp:Button ID="btn_CalculationResult" runat="server" OnClick="btn_CalculationResult_Click" Text="結算今日剩餘人員成績" ForeColor="Red" Enabled="true" BackColor="LightPink" OnClientClick="confirm_user()"  Style="float: right" />
+                    <asp:Button ID="btn_CalculationResult" runat="server"  Text="結算今日剩餘人員成績" ForeColor="Red" Enabled="true" BackColor="LightPink"  OnClientClick="return confirm_user();" OnClick="btn_CalculationResult_Click"  Style="float: right" />
                 </div>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>

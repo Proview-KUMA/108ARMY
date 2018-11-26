@@ -109,7 +109,7 @@ public partial class ViewResult : System.Web.UI.Page
             DateTime ChangeDate = new DateTime(2018, 12, 31, 23, 59, 59);
             if (dt.Rows.Count > 0)
             {
-                for(int i = 0; i<dt.Rows.Count ; i++)
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     Dictionary<string, object> di = new Dictionary<string, object>();
                     string id = dt.Rows[i]["id"].ToString();

@@ -47,7 +47,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
         DataTable dt = du.getDataTableBysp("GetReplaceItemScore", d);
         if (dt.Rows.Count == 1)
         {
-            
+            Button2.Visible = true;
             name.Value = dt.Rows[0]["name"].ToString();
             checkid.Value = id.Value;
             sit_ups_name.Text = dt.Rows[0]["sit_ups_name"].ToString();
@@ -229,11 +229,11 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                 if (!string.IsNullOrEmpty(run_value))
                     txb_run2.Text = run_value.ToString();
             }
-
+            Button2.Visible = true;
         }
         else
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('沒有資料');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('查無資料');", true);
             //清空欄位
             name.Value = null;
             txb_sit1.Text = null;
@@ -265,6 +265,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
             txb_run2.Visible = false;
             lab_run1.Text = null;
             lab_run2.Text = null;
+            Button2.Visible = false;
         }
     }
     protected void Button2_Click(object sender, EventArgs e)
@@ -335,26 +336,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                     {
                         d.Add("sit_ups", DBNull.Value);
                     }
-                    //舊版的方法錯誤
-                    //如果沒輸入空白的話給0的值
-                    //if (string.IsNullOrEmpty(txb_sit1.Text))
-                    //    txb_sit1.Text = "0";
-                    //if (string.IsNullOrEmpty(txb_sit2.Text))
-                    //    txb_sit2.Text = "0";
-                    ////再判斷欄位是不是小於60
-                    //if (Convert.ToInt32(txb_sit1.Text) < 60 & Convert.ToInt32(txb_sit2.Text) < 60)
-                    //{
-                    //    int sit_sec = (Convert.ToInt32(txb_sit1.Text) * 60) + Convert.ToInt32(txb_sit2.Text);
-                    //    if (sit_sec == 0)
-                    //        d.Add("sit_ups", DBNull.Value);
-                    //    else
-                    //        d.Add("sit_ups", sit_sec);
-                    //}
-                    //else
-                    //{
-                    //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('分.秒欄位輸入值錯誤!!');", true);
-                    //    return;
-                    //}
+                   
                 }
                 //200公尺游泳使用
                 else if (sit_note == "(合格:1/不合格:0)")
@@ -382,12 +364,6 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                 //使用次數
                 else
                 {
-                    //舊版
-                    //如果空白沒輸入就塞null
-                    //if (string.IsNullOrEmpty(txb_sit2.Text))
-                    //    d.Add("sit_ups", DBNull.Value);
-                    //else
-                    //    d.Add("sit_ups", txb_sit2.Text);
                     //2016-1-26再修正值不等於"秒"，也是判斷二個欄位來相加
                     //分、秒都有值
                     if (!string.IsNullOrEmpty(txb_sit1.Text.Trim()) & !string.IsNullOrEmpty(txb_sit2.Text.Trim()))
@@ -498,12 +474,6 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                 //使用次數
                 else
                 {
-                    //舊版
-                    //如果空白沒輸入就塞null
-                    //if (string.IsNullOrEmpty(txb_push2.Text))
-                    //    d.Add("push_ups", DBNull.Value);
-                    //else
-                    //    d.Add("push_ups", txb_push2.Text);
                     //2016-1-26再修正值不等於"秒"，也是判斷二個欄位來相加
                     //分、秒都有值
                     if (!string.IsNullOrEmpty(txb_push1.Text.Trim()) & !string.IsNullOrEmpty(txb_push2.Text.Trim()))
@@ -616,13 +586,6 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                 //使用次數
                 else
                 {
-                    //舊版
-                    //如果空白沒輸入就塞null
-                    //if (string.IsNullOrEmpty(txb_run2.Text))
-                    //    d.Add("run", DBNull.Value);
-                    //else
-                    //    d.Add("run", txb_run2.Text);
-
                     //2016-1-26再修正值不等於"秒"，也是判斷二個欄位來相加
                     //分、秒都有值
                     if (!string.IsNullOrEmpty(txb_run1.Text.Trim()) & !string.IsNullOrEmpty(txb_run2.Text.Trim()))
@@ -657,11 +620,9 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                     du.executeNonQueryByText("update result set sit_ups = @sit_ups, push_ups = @push_ups, run=@run where id = @id and date = @date and status in ('001') and (memo != '000' or memo != '999')", d);
                     Account_c acc = (Account_c)Session["account"];
                     Lib.SysSetting.AddLog("替代方案成績輸入", acc.Account, "輸入對象: (" + id.Value + ") 輸入成績為(" + sit_ups_name.Text.Trim() + ": " + sit_value + ", " + push_ups_name.Text.Trim() + ": " + push_value + ", " + run_name.Text.Trim() + ": " + run_value + ")", DateTime.Now);
+
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('替代方案成績輸入完成!!');", true);
                     id.Value = "";
-                    //situps.Value = "";
-                    //pushups.Value = "";
-                    //run.Value = "";
                     name.Value = "";
 
                     //清空欄位
@@ -694,6 +655,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                     txb_run2.Visible = false;
                     lab_run1.Text = null;
                     lab_run2.Text = null;
+                    Button2.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -701,38 +663,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('" + ex.Message.ToString() + "');", true);
                 }
             }
-            //
-
-            //以下舊版
-            //if (id.Value != "" && id.Value == checkid.Value)
-            //{
-            //    if (sit_ups_name.Text == "200公尺游泳")
-            //    {
-            //        if (situps.Value == "0" || situps.Value == "1")
-            //            SaveScore();
-            //        else
-            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('「200公尺游泳」項目請輸入正確格式(合格:1/不合格:0)');", true);
-            //    }
-            //    else if (push_ups_name.Text == "200公尺游泳")
-            //    {
-            //        if (pushups.Value == "0" || pushups.Value == "1")
-            //            SaveScore();
-            //        else
-            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('「200公尺游泳」項目請輸入正確格式(合格:1/不合格:0)');", true);
-            //    }
-            //    else if (run_name.Text == "200公尺游泳")
-            //    {
-            //        if (run.Value == "0" || run.Value == "1")
-            //            SaveScore();
-            //        else
-            //            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('「200公尺游泳」項目請輸入正確格式(合格:1/不合格:0)');", true);
-            //    }
-            //    else
-            //    {
-            //        SaveScore();
-            //    }
-            //    //
-            //}
+            
             else
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('資料有誤!!請重新執行搜尋!!');", true);
@@ -774,44 +705,7 @@ public partial class ReplaceItemScore : System.Web.UI.Page
     {
         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('「200公尺游泳」項目請輸入正確格式(合格:1/不合格:0)');", true);
     }
-    //舊版更新成績
-    //public void SaveScore()
-    //{
-    //    Lib.DataUtility du = new Lib.DataUtility();
-    //    Dictionary<string, object> d = new Dictionary<string, object>();
-    //    try
-    //    {
-    //        if (situps.Value == "")
-    //            d.Add("sit_ups", DBNull.Value);
-    //        else
-    //            d.Add("sit_ups", Convert.ToInt32(situps.Value));
-    //        if (pushups.Value == "")
-    //            d.Add("push_ups", DBNull.Value);
-    //        else
-    //            d.Add("push_ups", Convert.ToInt32(pushups.Value));
-    //        if (run.Value == "")
-    //            d.Add("run", DBNull.Value);
-    //        else
-    //            d.Add("run", Convert.ToInt32(run.Value));
-    //        d.Add("id", id.Value);
-    //        d.Add("date", Convert.ToDateTime(dateValue.Value));
-    //        du.executeNonQueryByText("update result set sit_ups = @sit_ups, push_ups = @push_ups, run=@run where id = @id and date = @date and status in ('001') and (memo != '000' or memo != '999')", d);
-    //        Account_c acc = (Account_c)Session["account"];
-    //        Lib.SysSetting.AddLog("替代方案成績輸入", acc.Account, "輸入對象: (" + id.Value + ") 輸入成績為(" + sit_ups_name.Text + ": " + situps.Value + ", " + push_ups_name.Text + ": " + pushups.Value + ", " + run_name.Text + ": " + run.Value + ")", DateTime.Now);
-    //        ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('替代方案成績輸入完成!!');", true);
-    //        id.Value = "";
-    //        situps.Value = "";
-    //        pushups.Value = "";
-    //        run.Value = "";
-    //        name.Value = "";
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, "ReplaceItemScore.aspx");
-    //        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('" + ex.Message.ToString() + "');", true);
-    //    }
-    //}
-
+   
     void Page_Error(object sender, EventArgs e)
     {
         Exception ex = Server.GetLastError();

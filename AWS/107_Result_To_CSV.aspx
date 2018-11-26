@@ -29,7 +29,14 @@
         <br />
         <br />
         <br />
-        <asp:Button ID="btn_InqResult" runat="server" Text="下載CSV檔" Font-Size="Larger" OnClick="btn_InqResult_Click" BackColor="#33CC33" Font-Bold="True" />
+        <asp:Button ID="btn_InqResult" runat="server" Text="下載完整CSV檔" Font-Size="Larger" OnClick="btn_InqResult_Click" BackColor="#33CC33" Font-Bold="True" />
+        <asp:Label ID="Label6" runat="server" Text="(供資料庫匯入使用)" ForeColor="Green"></asp:Label>
+        <br />
+        <br />
+        <br />
+        <asp:Button ID="btn_InqResult_Simple" runat="server" Text="下載簡化CSV檔" Font-Size="Larger" OnClick="btn_InqResult_Simple_Click" BackColor="Aqua" Font-Bold="True" />
+        <asp:Label ID="Label7" runat="server" Text="(供EXCEL分析使用)" ForeColor="Blue"></asp:Label>
+        <br />
         <br />
         <br />
     </div>

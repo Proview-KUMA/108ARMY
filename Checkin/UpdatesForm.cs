@@ -34,6 +34,7 @@ namespace InI
 
         private void btn_InqData_Click(object sender, EventArgs e)
         {
+            lab_ingMsg.Text = null;
             Id = string.Empty;
             Test_date = new DateTime();
             Status = string.Empty;
@@ -67,9 +68,14 @@ namespace InI
                         dtp_Birth.Value = Old_Birth;
                         lab_Age.Text = Old_Age;
                     }
+                    else
+                    {
+                        lab_ingMsg.Text = "查無資料";
+                    }
                 }
                 catch (Exception ex)
                 {
+                    lab_ingMsg.Text = "查詢失敗";
                     groupBox1.Visible = false;
                     MessageBox.Show(ex.Message);
                 }
@@ -85,6 +91,7 @@ namespace InI
             New_Name = txb_Name.Text.Trim();
             New_Birth = dtp_Birth.Value;
             New_Age = lab_Age.Text.Trim();
+            bool isChangeAge = false;
             string AlertMsg = string.Empty;
             if (New_Name != Old_Name || New_Birth.ToShortDateString() != Old_Birth.ToShortDateString() || New_Age != Old_Age)
             {
@@ -94,7 +101,11 @@ namespace InI
                 if (New_Birth.ToShortDateString() != Old_Birth.ToShortDateString())
                     AlertMsg += "生日：[" + Old_Birth.ToShortDateString() + "] --> [" + New_Birth.ToShortDateString() + "]" + Environment.NewLine;
                 if (New_Age != Old_Age)
-                    AlertMsg += "年齡：[" + Old_Age + "] --> [" + New_Age + "]" + Environment.NewLine + Environment.NewLine + "(年齡若有異動，系統將重新結算成績)" + Environment.NewLine;
+                {
+                    isChangeAge = true;
+                    AlertMsg += "年齡：[" + Old_Age + "] --> [" + New_Age + "]" + Environment.NewLine + Environment.NewLine + "(若已結算成績且年齡有異動者，系統將自動重新計算成績)" + Environment.NewLine;
+                }
+                    
                 DialogResult dialogResult = MessageBox.Show(AlertMsg, "確認更新資料", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -109,23 +120,26 @@ namespace InI
                         d.Add("age", New_Age);
                         du.executeNonQueryBysp("Ex108_UpdatePlayerData", d);
 
-                        if (Status.Substring(0, 1) == "1")
+                        if (isChangeAge==true && Status.Substring(0, 1) == "1")
                         {
-                            Dictionary<string, object> di = new Dictionary<string, object>();
-                            DataTable dt = new DataTable();
-                            di.Add("id", Id);
-                            di.Add("date", Test_date);
-                            DateTime Change_time = new DateTime(2018, 12, 31, 23, 59, 59);//檢查時間 2018年12月31日
+                            if(Status=="102" || Status == "103" || Status == "105")
+                            {
+                                Dictionary<string, object> di = new Dictionary<string, object>();
+                                DataTable dt = new DataTable();
+                                di.Add("id", Id);
+                                di.Add("date", Test_date);
+                                DateTime Change_time = new DateTime(2018, 12, 31, 23, 59, 59);//檢查時間 2018年12月31日
 
-                            if (Test_date > Change_time)//如果時間大於設定時間
-                            {
-                                //新版-2019年1月1日開始啟用之成績結算sp
-                                dt = du.getDataTableBysp(@"Ex108_CalResultByID", di);
-                            }
-                            else
-                            {
-                                //舊版2018年之前用
-                                dt = du.getDataTableBysp(@"Ex106_CalResultByID", di);
+                                if (Test_date > Change_time)//如果時間大於設定時間
+                                {
+                                    //新版-2019年1月1日開始啟用之成績結算sp
+                                    dt = du.getDataTableBysp(@"Ex108_CalResultByID", di);
+                                }
+                                else
+                                {
+                                    //舊版2018年之前用
+                                    dt = du.getDataTableBysp(@"Ex106_CalResultByID", di);
+                                }
                             }
                         }
                         btn_InqData_Click(btn_InqData, e);//再執行一次查詢

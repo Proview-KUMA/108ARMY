@@ -44,6 +44,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lab_ingMsg = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,7 +92,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.groupBox1.ForeColor = System.Drawing.Color.Blue;
-            this.groupBox1.Location = new System.Drawing.Point(17, 59);
+            this.groupBox1.Location = new System.Drawing.Point(17, 74);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(428, 322);
             this.groupBox1.TabIndex = 3;
@@ -224,11 +225,22 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "姓名：";
             // 
+            // lab_ingMsg
+            // 
+            this.lab_ingMsg.AutoSize = true;
+            this.lab_ingMsg.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lab_ingMsg.ForeColor = System.Drawing.Color.Red;
+            this.lab_ingMsg.Location = new System.Drawing.Point(139, 46);
+            this.lab_ingMsg.Name = "lab_ingMsg";
+            this.lab_ingMsg.Size = new System.Drawing.Size(0, 20);
+            this.lab_ingMsg.TabIndex = 4;
+            // 
             // UpdatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 389);
+            this.ClientSize = new System.Drawing.Size(467, 407);
+            this.Controls.Add(this.lab_ingMsg);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_InqData);
             this.Controls.Add(this.txb_Id);
@@ -267,5 +279,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lab_status;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lab_ingMsg;
     }
 }

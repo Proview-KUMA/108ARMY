@@ -377,7 +377,9 @@
                             <asp:BoundField DataField="update_time" HeaderText="異動時間" SortExpression="update_time">
                                 <ItemStyle Wrap="False" />
                             </asp:BoundField>
-                            
+                            <asp:BoundField DataField="type" HeaderText="異動類別" SortExpression="type">
+                                <ItemStyle Wrap="False" />
+                            </asp:BoundField>
                         </Columns>
                         <EditRowStyle CssClass="EditRowStyle" />
                         <HeaderStyle CssClass="HeaderStyle" Wrap="False" />

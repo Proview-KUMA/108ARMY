@@ -10,12 +10,12 @@ using Lib.Center;
 
 public partial class ResultCorrect : System.Web.UI.Page
 {
-    public static string old_situps = "";
-    public static string old_situps_score = "";
-    public static string old_pushups = "";
-    public static string old_pushups_score = "";
-    public static string old_run = "";
-    public static string old_run_score = "";
+    public static string old_situps = string.Empty;
+    public static string old_situps_score = string.Empty;
+    public static string old_pushups = string.Empty;
+    public static string old_pushups_score = string.Empty;
+    public static string old_run = string.Empty;
+    public static string old_run_score = string.Empty;
     public static string new_sit_ups = string.Empty;
     public static string new_push_ups = string.Empty;
     public static string new_run = string.Empty;
@@ -456,7 +456,6 @@ public partial class ResultCorrect : System.Web.UI.Page
                         dic.Add("old_run", old_run);
                     else
                         dic.Add("old_run", DBNull.Value);
-                    //未完成11-5
                     if (!string.IsNullOrEmpty(new_sit_ups))
                         dic.Add("new_sit_ups", new_sit_ups);
                     else
@@ -475,9 +474,10 @@ public partial class ResultCorrect : System.Web.UI.Page
                     else
                         dic.Add("account_id", DBNull.Value);
                     dic.Add("update_time", DateTime.Now);
+                    dic.Add("type", "成績補正");
 
                     Lib.SysSetting.AddResultCorrectLog(dic);
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('請列印成績 , 完成補正成績程序!!');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "", "alert('成績補正完成!!');", true);
                     id1.Value = "";
                     //situps.Value = "";
                     //pushups.Value = "";

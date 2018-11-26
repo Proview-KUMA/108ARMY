@@ -58,6 +58,14 @@ namespace InI
             }
         }
 
+        private void btn_InqTab4_Click(object sender, EventArgs e)
+        {
+            chart_RankTest.ChartAreas.Clear();
+            chart_RankTest.Series.Clear();
+            chart_RankTest.Legends.Clear();
+            Draw_RankTest_Chart(cbb_YearTab4.Text);
+        }
+
         #region [圖表處理]
         //1、實測人數
         private void Draw_RealTest_Chart(string year)
@@ -113,7 +121,7 @@ namespace InI
             chart_RealTest.Series["Series1"].LegendText = "人數(" + cbb_YearTab1.Text + "年)";
             chart_RealTest.Series["Series1"].Font = new Font("微軟正黑體", 12, FontStyle.Bold);
             chart_RealTest.Series["Series1"].Color = Color.Aquamarine;
-            chart_RealTest.Series["Series1"].LabelForeColor = Color.Blue;
+            chart_RealTest.Series["Series1"].LabelForeColor = Color.Red;
             chart_RealTest.Series["Series1"].IsValueShownAsLabel = true;
             chart_RealTest.Series["Series1"].Points.DataBindXY(Value_X, Value_Y);
         }
@@ -319,6 +327,66 @@ namespace InI
             chart_StandartReplace.Series["Series2"].Points.DataBindXY(Value_X, Value_Y2);
         }
 
+        //4、每年官、士、兵到測人數(含人工)
+        private void Draw_RankTest_Chart(string year)
+        {
+            string[] Value_X;
+            int[] Value_Y;
+            Value_X = new string[6] { "軍官", "士官", "士兵" , "軍官(人工)", "士官(人工)", "士兵(人工)" };
+            Value_Y = new int[6] { 0, 0, 0, 0, 0, 0};//先把人數全塞0
+
+            string InqYear = year;
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("year", InqYear);
+            DataTable dt = new DataTable();
+            dt = Do_GetTable_Dic("Ex108_Get_RankTest_Chart", dic);
+            if (dt.Rows.Count > 0)
+            {
+                Value_Y[0] = Convert.ToInt32(dt.Rows[0]["rank1_r"].ToString());
+                Value_Y[1] = Convert.ToInt32(dt.Rows[0]["rank2_r"].ToString());
+                Value_Y[2] = Convert.ToInt32(dt.Rows[0]["rank3_r"].ToString());
+                Value_Y[3] = Convert.ToInt32(dt.Rows[0]["rank1_k"].ToString());
+                Value_Y[4] = Convert.ToInt32(dt.Rows[0]["rank2_k"].ToString());
+                Value_Y[5] = Convert.ToInt32(dt.Rows[0]["rank3_k"].ToString());
+            }
+
+
+            //建立物件
+            chart_RankTest.ChartAreas.Add("ChartAreas1");//建立圖表區塊
+            chart_RankTest.Series.Add("Series1");//建立圖表
+            chart_RankTest.Legends.Add("Legends1");//建立圖例
+            //設定XY軸名稱顯示
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.Title = "階級";
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisY.Title = "人數";
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisY.TextOrientation = TextOrientation.Horizontal;//將文字變橫向顯示
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.TitleForeColor = Color.Blue;
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisY.TitleForeColor = Color.Red;
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisY.TitleFont = new Font("微軟正黑體", 16, FontStyle.Bold);
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.LabelStyle.Font = new Font("微軟正黑體", 10, FontStyle.Bold);
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisY.LabelStyle.Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            //加入下二行將x軸全部標籤顯示
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.LabelStyle.IsStaggered = true;
+            chart_RankTest.ChartAreas["ChartAreas1"].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
+
+            //圖例設定
+            //chart_RankTest.Legends["Legends1"].DockedToChartArea = "ChartAreas1";//顯示在圖表內
+            chart_RankTest.Legends["Legends1"].Docking = Docking.Top;//顯示位置上中下//上
+            chart_RankTest.Legends["Legends1"].Alignment = StringAlignment.Near;//顯示位置左中右//左
+            chart_RankTest.Legends["Legends1"].Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            chart_RankTest.Legends["Legends1"].BackColor = Color.Transparent;
+            //chart_RankTest.Legends["Legends1"].Title = cbb_YearTab1.Text+"年";
+            //chart_RankTest.Legends["Legends1"].TitleFont = new Font("微軟正黑體", 12, FontStyle.Bold);
+
+            chart_RankTest.Series["Series1"].ChartType = SeriesChartType.Column;
+            chart_RankTest.Series["Series1"].LegendText = "人數(" + cbb_YearTab1.Text + "年)";
+            chart_RankTest.Series["Series1"].Font = new Font("微軟正黑體", 12, FontStyle.Bold);
+            chart_RankTest.Series["Series1"].Color = Color.MediumPurple;
+            chart_RankTest.Series["Series1"].LabelForeColor = Color.Red;
+            chart_RankTest.Series["Series1"].IsValueShownAsLabel = true;
+            chart_RankTest.Series["Series1"].Points.DataBindXY(Value_X, Value_Y);
+        }
+
         #endregion
 
         #region [自定處理方法]
@@ -336,10 +404,12 @@ namespace InI
                     cbb_YearTab1.Items.Add(years[i]);
                     cbb_YearTab2.Items.Add(years[i]);
                     cbb_YearTab3.Items.Add(years[i]);
+                    cbb_YearTab4.Items.Add(years[i]);
                 }
                 cbb_YearTab1.SelectedIndex = years.Length - 1;
                 cbb_YearTab2.SelectedIndex = years.Length - 1;
                 cbb_YearTab3.SelectedIndex = years.Length - 1;
+                cbb_YearTab4.SelectedIndex = years.Length - 1;
             }       
         }
         #endregion
@@ -397,7 +467,9 @@ namespace InI
                 return dt;
             }
         }
-        #endregion       
+        #endregion
+
+        
     }
     
 }

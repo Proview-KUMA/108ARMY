@@ -100,6 +100,8 @@ public partial class _108_PlayerUpdate : System.Web.UI.Page
                         du.executeNonQueryBysp("Ex108_UpdatePlayerData", d);
                         //寫入log
                         UpdateLog = string.Empty;
+                        if (!string.IsNullOrEmpty(Sid))
+                            UpdateLog += "sid-" + Sid + ",";
                         if (Old_Name != Name)
                             UpdateLog += "名[" + Old_Name + "," + Name + "]";
                         if (Old_Id != Id)

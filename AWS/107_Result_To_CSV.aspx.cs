@@ -43,7 +43,7 @@ public partial class _107_Result_To_CSV : System.Web.UI.Page
     }
     
     //2018-1-12修正正確寫法，才能在Client端儲存檔案
-    private void Save_csv_toClient(DataTable dt, string svPath)
+    private void Save_csv_toClient(DataTable dt, string svPath ,bool isSimple)
     {
         System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
         response.ClearContent();
@@ -54,7 +54,13 @@ public partial class _107_Result_To_CSV : System.Web.UI.Page
 
         
         string data = "";
-
+        
+        for(int i = 0; i < dt.Columns.Count; i++)
+        {
+            data += dt.Columns[i].ColumnName + ",";
+        }
+        sb.AppendLine(data.Substring(0, (data.Length - 1)));
+        data = "";
         foreach (DataRow row in dt.Rows)
         {
             foreach (DataColumn column in dt.Columns)
@@ -63,13 +69,22 @@ public partial class _107_Result_To_CSV : System.Web.UI.Page
                 {
                     if (column.ColumnName == "birth" | column.ColumnName == "date")
                     {
-                        data += Convert.ToDateTime(row[column].ToString().Trim()).ToString("yyyy-MM-dd 00:00:00.000") + ",";
+                        if(isSimple)
+                            data += Convert.ToDateTime(row[column].ToString().Trim()).ToString("yyyy-MM-dd") + ",";
+                        else
+                            data += Convert.ToDateTime(row[column].ToString().Trim()).ToString("yyyy-MM-dd 00:00:00.000") + ",";
+
                     }
                     else
                         data += row[column].ToString().Trim() + ",";
                 }
                 else
-                    data += "NULL,";
+                {
+                    if (isSimple)
+                        data += ",";
+                    else
+                        data += "NULL,";
+                }
             }
             data += "";
             sb.AppendLine(data.Substring(0, (data.Length - 1)));
@@ -133,8 +148,65 @@ public partial class _107_Result_To_CSV : System.Web.UI.Page
             dt = du.getDataTableBysp_BigData(@"Ex107_GetResultByDate", d);
             if (dt.Rows.Count > 0)
             {
-                string svPath = "Result(" + start_date + "_" + end_date + ").csv";
-                Save_csv_toClient(dt, svPath);             
+                string svPath = "Result(" + start_date + "_" + end_date + ")-sql.csv";
+                Save_csv_toClient(dt, svPath , false);             
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('" + "查無資料!!" + "')", true);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            //記錄錯誤訊息
+            SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
+            ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('" + ex.Message + "')", true);
+        }
+    }
+
+    protected void btn_InqResult_Simple_Click(object sender, EventArgs e)
+    {
+        string year = ddl_year.SelectedItem.Text.ToString() + "-";
+        string start_date = string.Empty;
+        string end_date = string.Empty;
+        switch (ddl_season.SelectedValue)
+        {
+            case "1":
+                start_date = year + "01-01";
+                end_date = year + "03-31";
+                break;
+            case "2":
+                start_date = year + "04-01";
+                end_date = year + "06-30";
+                break;
+            case "3":
+                start_date = year + "07-01";
+                end_date = year + "09-30";
+                break;
+            case "4":
+                start_date = year + "10-01";
+                end_date = year + "12-31";
+                break;
+            default:
+                start_date = year + "01-01";
+                end_date = year + "03-31";
+                break;
+        }
+
+        Dictionary<string, object> d = new Dictionary<string, object>();
+        Lib.DataUtility du = new Lib.DataUtility();
+        try
+        {
+            d.Add("start_date", start_date);
+            d.Add("end_date", end_date);
+            DataTable dt = new DataTable();
+            //2017-11-23使用新的函式，加長timeout為120秒
+            dt = du.getDataTableBysp_BigData(@"Ex108_GetResultByDate_Simple", d);
+            if (dt.Rows.Count > 0)
+            {
+                string svPath = "Result(" + start_date + "_" + end_date + ")-exl.csv";
+                Save_csv_toClient(dt, svPath, true);
             }
             else
             {

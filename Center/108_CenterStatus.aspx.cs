@@ -15,6 +15,7 @@ public partial class _108_CenterStatus : System.Web.UI.Page
     //測試新位置git
     private static string SvIp = string.Empty;
     private static string GatewayIp = String.Empty;
+    private static string TTL = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -25,7 +26,7 @@ public partial class _108_CenterStatus : System.Web.UI.Page
         catch (Exception ex)
         {
             //記錄錯誤訊息
-            SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
+            //SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
             SvIp = "查詢本機ip失敗";
             GatewayIp = "查詢本機ip失敗";
         }
@@ -38,6 +39,7 @@ public partial class _108_CenterStatus : System.Web.UI.Page
     //檢查閘道連線
     protected void btn_PingIp_Click(object sender, EventArgs e)
     {
+        TTL = string.Empty;
         string GatewayIp = lab_GatewayIp.Text;
         lab_PingGatewayResult.ForeColor = Color.Red;
         lab_PingGatewayResult.Text = null;
@@ -46,7 +48,7 @@ public partial class _108_CenterStatus : System.Web.UI.Page
             if (ByPing(GatewayIp))
             {
                 lab_PingGatewayResult.ForeColor = Color.Blue;
-                lab_PingGatewayResult.Text = "連線正常";
+                lab_PingGatewayResult.Text = "連線正常,TTL=" + TTL;
             }
             else
             {
@@ -90,7 +92,10 @@ public partial class _108_CenterStatus : System.Web.UI.Page
         if (tReply.Status != IPStatus.Success)
             return false;
         else
+        {
+            TTL = tReply.Options.Ttl.ToString();
             return true;
+        }
     }
     public string GetSvIp()
     {

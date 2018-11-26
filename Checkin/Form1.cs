@@ -1491,20 +1491,6 @@ namespace InI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    //showSystemTime();
-            //    //2018-1-29出現自製連線視窗
-            //    if (ST_Form == null)
-            //    {
-            //        ST_Form = new SystemTimeForm();
-            //        ST_Form.ShowDialog();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("取得系統時間失敗：" + Environment.NewLine + ex.Message);
-            //}
             try
             {
                 Lib.DataUtility du_center = new DataUtility();
