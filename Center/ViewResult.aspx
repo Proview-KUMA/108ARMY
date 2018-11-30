@@ -7,7 +7,7 @@
     <script type="text/javascript" src="Script/Common.js"></script>
     <script type="text/javascript" language="javascript">
         function confirm_user() {
-            if (confirm("確認結束今日鑑測工作，並結算剩餘人員之成績?") == true) {
+            if (confirm("確認結束今日鑑測工作，並結算剩餘人員之成績?\r\n (測試人員資料將自動刪除)") == true) {
                 var btn = document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel6_btn_CalculationResult");
                 btn.innerText = "結算中，請稍候…";
                 return true;

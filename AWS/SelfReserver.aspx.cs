@@ -79,7 +79,7 @@ public partial class SelfReserver : System.Web.UI.Page
             deny = Lib.SysSetting.getDeniedDates(this.cneterSel.SelectedValue);
             //if (e.Day.IsWeekend)//判斷是不是非工作日
             if(wk.DicWeek[e.Day.Date.DayOfWeek]==false)//2017-10-25新寫法
-            {
+                {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
                 if (_isOver == true)
@@ -113,6 +113,7 @@ public partial class SelfReserver : System.Web.UI.Page
             }
             //if (!e.Day.IsWeekend)//判斷是不是工作日
             if (wk.DicWeek[e.Day.Date.DayOfWeek] == true)//2017-10-25新寫法
+            //else//2018-11-30修正為else
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);

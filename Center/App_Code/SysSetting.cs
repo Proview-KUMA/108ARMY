@@ -81,13 +81,20 @@ namespace Lib
         {
             get
             {
-                Configuration c = null;
-                if (HostingEnvironment.ApplicationVirtualPath == "/")
-                    c = WebConfigurationManager.OpenWebConfiguration("~/web.config");
+                try
+                {
+                    Configuration c = null;
+                    if (HostingEnvironment.ApplicationVirtualPath == "/")
+                        c = WebConfigurationManager.OpenWebConfiguration("~/web.config");
 
-                WebConfigurationFileMap fileMap = CreateFileMap(HostingEnvironment.ApplicationVirtualPath);
-                c = WebConfigurationManager.OpenMappedWebConfiguration(fileMap, HostingEnvironment.ApplicationVirtualPath);
-                return c.AppSettings.Settings["centerCode"].Value;
+                    WebConfigurationFileMap fileMap = CreateFileMap(HostingEnvironment.ApplicationVirtualPath);
+                    c = WebConfigurationManager.OpenMappedWebConfiguration(fileMap, HostingEnvironment.ApplicationVirtualPath);
+                    return c.AppSettings.Settings["centerCode"].Value;
+                }
+                catch(Exception ex)
+                {
+                    return "10";
+                }
             }
         }
 

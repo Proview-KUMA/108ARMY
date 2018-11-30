@@ -280,6 +280,7 @@
             this.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "HistoryChart";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "歷史數據查詢";
             this.Load += new System.EventHandler(this.HistoryChart_Load);
             this.tabControl1.ResumeLayout(false);

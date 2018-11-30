@@ -909,7 +909,7 @@ namespace InI
             //判斷男女
             if (_gender.Text == "男性")
             {
-                if (this.measure.Bmi > 31)
+                if (Convert.ToDouble(this.measure.Bmi.ToString("0.0")) > 31)
                 {
                     if (System.Configuration.ConfigurationManager.AppSettings["IsUsedBodyfat"].ToString() == "1")
                     {
@@ -935,7 +935,7 @@ namespace InI
             }
             else if (_gender.Text == "女性")
             {
-                if (this.measure.Bmi > 26)
+                if (Convert.ToDouble(this.measure.Bmi.ToString("0.0")) > 26)
                 {
                     if (System.Configuration.ConfigurationManager.AppSettings["IsUsedBodyfat"].ToString() == "1")
                     {

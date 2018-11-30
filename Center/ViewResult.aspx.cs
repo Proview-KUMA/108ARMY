@@ -103,6 +103,7 @@ public partial class ViewResult : System.Web.UI.Page
         DataTable dt = new DataTable();
         try
         {
+            du.executeNonQueryByText("Delete Result where id like 'AA________'");//先刪除測試人員帳號
             d.Add("type", "001");
             d.Add("value", System.DateTime.Now.ToShortDateString());
             dt = du.getDataTableBysp("Ex108_ViewStatus", d);

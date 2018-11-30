@@ -332,8 +332,8 @@ namespace InI
         {
             string[] Value_X;
             int[] Value_Y;
-            Value_X = new string[6] { "軍官", "士官", "士兵" , "軍官(人工)", "士官(人工)", "士兵(人工)" };
-            Value_Y = new int[6] { 0, 0, 0, 0, 0, 0};//先把人數全塞0
+            Value_X = new string[9] { "官(應到)", "士(應到)", "兵(應到)", "官(實到)", "士(實到)", "兵(實到)" , "官(人工)", "士(人工)", "兵(人工)" };
+            Value_Y = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0};//先把人數全塞0
 
             string InqYear = year;
             Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -342,12 +342,15 @@ namespace InI
             dt = Do_GetTable_Dic("Ex108_Get_RankTest_Chart", dic);
             if (dt.Rows.Count > 0)
             {
-                Value_Y[0] = Convert.ToInt32(dt.Rows[0]["rank1_r"].ToString());
-                Value_Y[1] = Convert.ToInt32(dt.Rows[0]["rank2_r"].ToString());
-                Value_Y[2] = Convert.ToInt32(dt.Rows[0]["rank3_r"].ToString());
-                Value_Y[3] = Convert.ToInt32(dt.Rows[0]["rank1_k"].ToString());
-                Value_Y[4] = Convert.ToInt32(dt.Rows[0]["rank2_k"].ToString());
-                Value_Y[5] = Convert.ToInt32(dt.Rows[0]["rank3_k"].ToString());
+                Value_Y[0] = Convert.ToInt32(dt.Rows[0]["rank1_t"].ToString());
+                Value_Y[1] = Convert.ToInt32(dt.Rows[0]["rank2_t"].ToString());
+                Value_Y[2] = Convert.ToInt32(dt.Rows[0]["rank3_t"].ToString());
+                Value_Y[3] = Convert.ToInt32(dt.Rows[0]["rank1_r"].ToString());
+                Value_Y[4] = Convert.ToInt32(dt.Rows[0]["rank2_r"].ToString());
+                Value_Y[5] = Convert.ToInt32(dt.Rows[0]["rank3_r"].ToString());
+                Value_Y[6] = Convert.ToInt32(dt.Rows[0]["rank1_k"].ToString());
+                Value_Y[7] = Convert.ToInt32(dt.Rows[0]["rank2_k"].ToString());
+                Value_Y[8] = Convert.ToInt32(dt.Rows[0]["rank3_k"].ToString());
             }
 
 

@@ -53,12 +53,15 @@ namespace ScoreClose
             try
             {
                 //圖檔路徑寫在bin底下的config檔裡面<add key="Logo" value="http://192.168.0.29/Center/images/106_Transcripts_logo.bmp"/>
-                var request = WebRequest.Create(System.Configuration.ConfigurationManager.AppSettings["Logo"].ToString());
-                using (var response = request.GetResponse())
-                using (var stream = response.GetResponseStream())
-                {
-                    panel2.BackgroundImage = Bitmap.FromStream(stream);
-                }
+                //抓取sv圖檔
+                //var request = WebRequest.Create(System.Configuration.ConfigurationManager.AppSettings["Logo"].ToString());
+                //using (var response = request.GetResponse())
+                //using (var stream = response.GetResponseStream())
+                //{
+                //    panel2.BackgroundImage = Bitmap.FromStream(stream);
+                //}
+                //108年改抓取本機資料夾圖檔
+                panel2.BackgroundImage = Image.FromFile(Application.StartupPath + "\\106_Transcripts_logo.bmp");
             }
             catch (Exception ex)
             {

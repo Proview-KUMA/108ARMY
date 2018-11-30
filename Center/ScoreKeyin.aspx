@@ -249,7 +249,7 @@
                     }
                 });
 
-                $('#id').blur(function () {
+                $('#btn_inqid').click(function () {
                     //$('#id').change(function () {
                     var id_length = $('#id').val().length;
                     if ($('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel1_date').val() == "") {
@@ -608,8 +608,9 @@
 
                 <div id="div_id">
                     <p>身分證字號 :
-                        <input type="text" id="id" /></p>
+                        <input type="text" id="id" maxlength="10" /></p>
                     <p id="status" style="color:red"></p>
+                    <input type="button" id="btn_inqid" value="檢 查 資 料" style="background-color:antiquewhite;color:blue;font-size:20px;font-weight:600" />
                 </div>
 
                 <div id="playerinfo" style="display: none">
@@ -723,7 +724,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input id="savescore" type="button" value="成績儲存" /></td>
+                                    <input id="savescore" type="button" value="成績儲存" style="background-color:lightgoldenrodyellow;color:green;font-size:20px;font-weight:600" /></td>
                             </tr>
 
                         </tbody>
