@@ -11,16 +11,30 @@
             var _center_code = $('select option:selected').val();
             var _date = $(':text').val();
             if (_date != '') {
-                $.postJson('GetValueByCode.ashx', { mode: "centerLimit", center_code: _center_code, date: _date }, function(d, s) {
-                    if (s == "success") {
-                        $('#checkLimit').next().html('當日剩餘員額 : ');
-                        //$('#checkLimit').next().html($('select option:selected').text());
-                        $('#checkLimit').next().next().html(d["status"]);
-                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Label1').html(d["status"]);
-                        document.getElementById("Div1").style.display = "none";
-                        //alert();
-                    }
-                });
+                //檢查星期，1~6代表一~六，0=日
+                var arrdate = _date.split('/');
+                var year = parseInt(arrdate[0]) + 1911;
+                var month = arrdate[1];
+                var day = arrdate[2];
+                var newdate = year + '/' + month + '/' + day;
+                var checkday = new Date(newdate).getDay();
+                if (checkday == 5 || checkday == 6 || checkday == 0) {
+                    $('#checkLimit').next().html('星期五、六、日預設關站');
+                    document.getElementById("Div1").style.display = "";
+                }
+                else {
+                    $.postJson('GetValueByCode.ashx', { mode: "centerLimit", center_code: _center_code, date: _date }, function (d, s) {
+                        if (s == "success") {
+                            $('#checkLimit').next().html('當日剩餘員額 : ');
+                            //$('#checkLimit').next().html($('select option:selected').text());
+                            $('#checkLimit').next().next().html(d["status"]);
+                            $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Label1').html(d["status"]);
+                            document.getElementById("Div1").style.display = "none";
+                            //alert();
+                        }
+                    });
+                }
+                
             }
             else {
                 document.getElementById("Div1").style.display = "";
@@ -31,24 +45,44 @@
             $(this).attr({ style: 'display:none' });
         });
 
-        $('#Button1').click(function() {
-            if ($('#checkLimit').next().next().html() != '' && parseInt($('#checkLimit').next().next().html()) > 0) {
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_surecenter').text($('select option:selected').text());
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_suredate').text($(':text').val());
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Re_surecenter').text($('select option:selected').text());
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Re_suredate').text($(':text').val());
-                document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SureTimeAndPlace").style.display = "none";
-                document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_OrderStep1").style.display = "none";
-                document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SuccessDetails").style.display = "none";
-                document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_failDatails").style.display = "none";
-                document.getElementById("OrderStep2").style.display = "";
-                document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SureOrder").style.display = "";
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_datehide').val($(':text').val());
-                $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_centerhide').val($('select option:selected').text());
+        $('#Button1').click(function () {
+            var _date = document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_selectDate").value;
+            if (_date != "") {
+                //檢查星期，1~6代表一~六，0=日
+                var arrdate = _date.split('/');
+                var year = parseInt(arrdate[0]) + 1911;
+                var month = arrdate[1];
+                var day = arrdate[2];
+                var newdate = year + '/' + month + '/' + day;
+                var checkday = new Date(newdate).getDay();
+                if (checkday == 5 || checkday == 6 || checkday == 0) {
+                    alert('星期五、六、日預設關站日，無法報進!!');
+                }
+                else {
+                    if ($('#checkLimit').next().next().html() != '' && parseInt($('#checkLimit').next().next().html()) > 0) {
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_surecenter').text($('select option:selected').text());
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_suredate').text($(':text').val());
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Re_surecenter').text($('select option:selected').text());
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Re_suredate').text($(':text').val());
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SureTimeAndPlace").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_OrderStep1").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SuccessDetails").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_failDatails").style.display = "none";
+                        document.getElementById("OrderStep2").style.display = "";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_SureOrder").style.display = "";
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_datehide').val($(':text').val());
+                        $('#ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_centerhide').val($('select option:selected').text());
+                    }
+                    else {
+                        document.getElementById("Div1").style.display = "";
+                    }
+                }
             }
             else {
+                alert("請選擇日期!!");
                 document.getElementById("Div1").style.display = "";
             }
+            
         });
 
         $('#Button2').click(function() {
@@ -100,6 +134,29 @@
         });
 
     });
+    function checkDay() {
+        var result = false;
+        var _date = document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_selectDate").value;
+        if (_date != "") {
+            //檢查星期，1~6代表一~六，0=日
+            var arrdate = _date.split('/');
+            var year = parseInt(arrdate[0]) + 1911;
+            var month = arrdate[1];
+            var day = arrdate[2];
+            var newdate = year + '/' + month + '/' + day;
+            var checkday = new Date(newdate).getDay();
+            if (checkday == 5 || checkday == 6 || checkday == 0) {
+                alert('星期五、六、日預設關站日，無法報進!!');
+            }
+            else {
+                result = true;
+            }
+        }
+        else {
+            alert("請選擇日期!!");
+        }
+        return result;
+    }
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
