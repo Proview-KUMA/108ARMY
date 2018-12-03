@@ -139,7 +139,7 @@
             // 
             this.lab_age45up.AutoSize = true;
             this.lab_age45up.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lab_age45up.ForeColor = System.Drawing.Color.Yellow;
+            this.lab_age45up.ForeColor = System.Drawing.Color.Blue;
             this.lab_age45up.Location = new System.Drawing.Point(21, 325);
             this.lab_age45up.Name = "lab_age45up";
             this.lab_age45up.Size = new System.Drawing.Size(385, 24);

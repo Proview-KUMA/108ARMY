@@ -94,25 +94,38 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                 }
                 else
                 {
-                    int i = 0;
-                    foreach (KeyValuePair<string, DateTime> s in allow)
+
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == s.Value)
-                        {
-                            e.Cell.BackColor = System.Drawing.Color.Green;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                    }
-                    if (i == allow.Count)
-                    {
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
                         LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                         e.Cell.Controls.RemoveAt(0);
                         e.Cell.Text = l.Text;
                     }
+                    else
+                    {
+                        int i = 0;
+                        foreach (KeyValuePair<string, DateTime> s in allow)
+                        {
+                            if (e.Day.Date == s.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Green;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                            }
+                            else
+                            {
+                                i++;
+                            }
+                        }
+                        if (i == allow.Count)
+                        {
+                            LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                            e.Cell.Controls.RemoveAt(0);
+                            e.Cell.Text = l.Text;
+                        }
+                    }
+
                 }
             }
             //if (!e.Day.IsWeekend)//判斷是不是工作日
@@ -128,20 +141,43 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                 }
                 else
                 {
-                    foreach (KeyValuePair<string, DateTime> d in deny)
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == d.Value)
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
+                        LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                        e.Cell.Controls.RemoveAt(0);
+                        e.Cell.Text = l.Text;
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, DateTime> d in deny)
                         {
-                            e.Cell.BackColor = System.Drawing.Color.Red;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                            if (e.Cell.Controls.Count != 0)
+                            if (e.Day.Date == d.Value)
                             {
+                                e.Cell.BackColor = System.Drawing.Color.Red;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
                                 LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                                 e.Cell.Controls.RemoveAt(0);
                                 e.Cell.Text = l.Text;
                             }
                         }
+                        foreach (KeyValuePair<string, DateTime> d in deny)
+                        {
+                            if (e.Day.Date == d.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Red;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                                if (e.Cell.Controls.Count != 0)
+                                {
+                                    LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                                    e.Cell.Controls.RemoveAt(0);
+                                    e.Cell.Text = l.Text;
+                                }
+                            }
+                        }
                     }
+
                 }
             }
         }
