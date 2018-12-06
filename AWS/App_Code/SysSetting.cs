@@ -310,7 +310,7 @@ namespace Lib
                 string test1 = System.DateTime.Today.Year.ToString();
                 _date = (Convert.ToInt32(info[0]) + 1911).ToString() + "/" + info[1] + "/" + info[2];
                 //_date = (Convert.ToInt32(info[0])).ToString() + "/" + info[1] + "/" + info[2];
-                DateTime test = Convert.ToDateTime(_date);
+                DateTime test = Convert.ToDateTime(_date + " 12:00:00");
                 return Convert.ToDateTime(_date);
             }
             catch (Exception ex)

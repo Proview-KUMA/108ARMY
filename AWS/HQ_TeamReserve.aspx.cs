@@ -43,7 +43,7 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
             {
                 Calendar1.Visible = false;
                 dateDiv.Visible = false;
-
+                
             }
             else
             {
@@ -78,7 +78,7 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
         Thread.CurrentThread.CurrentCulture = ci;
         if (Page.IsPostBack)
         {
-            // selectDate.Text = "";
+           // selectDate.Text = "";
             allow = Lib.SysSetting.getAllowedDates(this.cneterSel.SelectedValue);
             deny = Lib.SysSetting.getDeniedDates(this.cneterSel.SelectedValue);
             //if (e.Day.IsWeekend)//判斷是不是非工作日
@@ -90,11 +90,10 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                 {
                     LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                     e.Cell.Controls.RemoveAt(0);
-                    e.Cell.Text = l.Text;
+                    e.Cell.Text = l.Text;       
                 }
                 else
                 {
-
                     if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
                         e.Cell.BackColor = System.Drawing.Color.Red;
@@ -125,7 +124,6 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                             e.Cell.Text = l.Text;
                         }
                     }
-
                 }
             }
             //if (!e.Day.IsWeekend)//判斷是不是工作日
@@ -162,22 +160,7 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                                 e.Cell.Text = l.Text;
                             }
                         }
-                        foreach (KeyValuePair<string, DateTime> d in deny)
-                        {
-                            if (e.Day.Date == d.Value)
-                            {
-                                e.Cell.BackColor = System.Drawing.Color.Red;
-                                e.Cell.ForeColor = System.Drawing.Color.White;
-                                if (e.Cell.Controls.Count != 0)
-                                {
-                                    LiteralControl l = (LiteralControl)e.Cell.Controls[0];
-                                    e.Cell.Controls.RemoveAt(0);
-                                    e.Cell.Text = l.Text;
-                                }
-                            }
-                        }
                     }
-
                 }
             }
         }
@@ -211,7 +194,7 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
         }
     }
 
-
+    
     //protected void check_OnClick(object sender, EventArgs e)
     //{
     //    Lib.Account a = new Lib.Account();
@@ -268,8 +251,8 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
             {
                 if (Lib.SysSetting.CheckYear(Convert.ToDateTime(datehide.Value)))
                 {
-                    DateTime checkDay = Lib.SysSetting.ToWorldDate(selectDate.Text);
-                    if (checkDay.DayOfWeek == DayOfWeek.Friday || checkDay.DayOfWeek == DayOfWeek.Saturday || checkDay.DayOfWeek == DayOfWeek.Thursday)
+                    DateTime checkDay = Lib.SysSetting.ToWorldDate(datehide.Value);
+                    if (checkDay.DayOfWeek == DayOfWeek.Friday || checkDay.DayOfWeek == DayOfWeek.Saturday || checkDay.DayOfWeek == DayOfWeek.Sunday)
                     {
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('星期五、六、日預設關站日，無法報進!!');", true);
                     }
@@ -753,6 +736,7 @@ public partial class HQ_TeamReserve : System.Web.UI.Page
                         Re_suredate.Text = datehide.Value;
                         #endregion
                     }
+
                 }
                 else
                 {

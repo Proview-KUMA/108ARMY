@@ -57,6 +57,9 @@ public partial class ReplaceItemReserverChange : System.Web.UI.Page
 
     protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
     {
+        //2017-10-25建立一個判斷星期的物件
+        Lib.WorkWeek wk = new Lib.WorkWeek(e.Day.Date.Year);
+
         Calendar1.Visible = true;
         TaiwanCalendar tc = new TaiwanCalendar();
         CultureInfo ci = new CultureInfo("zh-TW");
@@ -68,7 +71,8 @@ public partial class ReplaceItemReserverChange : System.Web.UI.Page
         {
             allow = Lib.SysSetting.getAllowedDates(this.cneterSel.SelectedValue);
             deny = Lib.SysSetting.getDeniedDates(this.cneterSel.SelectedValue);
-            if (e.Day.IsWeekend)
+            //if (e.Day.IsWeekend)
+            if (wk.DicWeek[e.Day.Date.DayOfWeek] == false)//2017-10-25新寫法
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
@@ -80,28 +84,40 @@ public partial class ReplaceItemReserverChange : System.Web.UI.Page
                 }
                 else
                 {
-                    int i = 0;
-                    foreach (KeyValuePair<string, DateTime> s in allow)
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == s.Value)
-                        {
-                            e.Cell.BackColor = System.Drawing.Color.Green;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                    }
-                    if (i == allow.Count)
-                    {
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
                         LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                         e.Cell.Controls.RemoveAt(0);
                         e.Cell.Text = l.Text;
                     }
+                    else
+                    {
+                        int i = 0;
+                        foreach (KeyValuePair<string, DateTime> s in allow)
+                        {
+                            if (e.Day.Date == s.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Green;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                            }
+                            else
+                            {
+                                i++;
+                            }
+                        }
+                        if (i == allow.Count)
+                        {
+                            LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                            e.Cell.Controls.RemoveAt(0);
+                            e.Cell.Text = l.Text;
+                        }
+                    }
                 }
             }
-            if (!e.Day.IsWeekend)
+            //if (!e.Day.IsWeekend)
+            if (wk.DicWeek[e.Day.Date.DayOfWeek] == true)//2017-10-25新寫法
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
@@ -113,15 +129,26 @@ public partial class ReplaceItemReserverChange : System.Web.UI.Page
                 }
                 else
                 {
-                    foreach (KeyValuePair<string, DateTime> d in deny)
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == d.Value)
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
+                        LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                        e.Cell.Controls.RemoveAt(0);
+                        e.Cell.Text = l.Text;
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, DateTime> d in deny)
                         {
-                            e.Cell.BackColor = System.Drawing.Color.Red;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                            LiteralControl l = (LiteralControl)e.Cell.Controls[0];
-                            e.Cell.Controls.RemoveAt(0);
-                            e.Cell.Text = l.Text;
+                            if (e.Day.Date == d.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Red;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                                LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                                e.Cell.Controls.RemoveAt(0);
+                                e.Cell.Text = l.Text;
+                            }
                         }
                     }
                 }

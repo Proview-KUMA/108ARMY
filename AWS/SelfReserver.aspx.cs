@@ -58,7 +58,7 @@ public partial class SelfReserver : System.Web.UI.Page
         catch (Exception ex)
         {
             Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
-            Response.Redirect("index.aspx");
+            Response.Redirect("index.aspx");            
         }
     }
     protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
@@ -78,11 +78,11 @@ public partial class SelfReserver : System.Web.UI.Page
             allow = Lib.SysSetting.getAllowedDates(this.cneterSel.SelectedValue);
             deny = Lib.SysSetting.getDeniedDates(this.cneterSel.SelectedValue);
             //if (e.Day.IsWeekend)//判斷是不是非工作日
-            if (wk.DicWeek[e.Day.Date.DayOfWeek] == false)//2017-10-25新寫法
+            if(wk.DicWeek[e.Day.Date.DayOfWeek]==false)//2017-10-25新寫法
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
-                if (_isOver == true)//過期時間
+                if (_isOver == true)
                 {
                     LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                     e.Cell.Controls.RemoveAt(0);
@@ -90,7 +90,7 @@ public partial class SelfReserver : System.Web.UI.Page
                 }
                 else
                 {
-                    if (dt.DayOfWeek == DayOfWeek.Friday )
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
                         e.Cell.BackColor = System.Drawing.Color.Red;
                         e.Cell.ForeColor = System.Drawing.Color.White;
@@ -125,7 +125,6 @@ public partial class SelfReserver : System.Web.UI.Page
             }
             //if (!e.Day.IsWeekend)//判斷是不是工作日
             if (wk.DicWeek[e.Day.Date.DayOfWeek] == true)//2017-10-25新寫法
-            //else//2018-11-30修正為else
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
@@ -161,10 +160,8 @@ public partial class SelfReserver : System.Web.UI.Page
                     }
                     
                 }
-               
             }
         }
-
         Calendar1.Visible = true;
         ci.DateTimeFormat.Calendar = tc;
         ci.DateTimeFormat.YearMonthPattern = "民國yy年MM月";
@@ -173,8 +170,8 @@ public partial class SelfReserver : System.Web.UI.Page
     }
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
-
-        DateTime s = Lib.SysSetting.ToWorldDate(Calendar1.SelectedDate.ToShortDateString());
+       
+        DateTime s = Lib.SysSetting.ToWorldDate(Calendar1.SelectedDate.ToShortDateString());        
         bool _isOver = Lib.SysSetting.isOverTime(s);
         if (_isOver == true)
         {
@@ -217,7 +214,6 @@ public partial class SelfReserver : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-
         if (Session["player"] != null)
         {
             if (selectDate.Text != "" && cneterSel.SelectedValue != "0")
@@ -528,7 +524,7 @@ public partial class SelfReserver : System.Web.UI.Page
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "$.unblockUI();", true);
                         }
                     }
-
+                   
                 }
                 else
                 {

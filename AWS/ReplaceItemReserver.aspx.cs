@@ -121,7 +121,6 @@ public partial class ReplaceItemReserver : System.Web.UI.Page
                             e.Cell.Text = l.Text;
                         }
                     }
-
                 }
             }
             //if (!e.Day.IsWeekend)//判斷是不是工作日
@@ -516,7 +515,6 @@ public partial class ReplaceItemReserver : System.Web.UI.Page
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "$.unblockUI();", true);
                         }
                     }
-
                 }
                 else
                 {

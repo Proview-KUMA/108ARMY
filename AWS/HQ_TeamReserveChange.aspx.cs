@@ -56,6 +56,9 @@ public partial class HQ_TeamReserveChange : System.Web.UI.Page
 
     protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
     {
+        //2017-10-25建立一個判斷星期的物件
+        Lib.WorkWeek wk = new Lib.WorkWeek(e.Day.Date.Year);
+
         Calendar1.Visible = true;
         TaiwanCalendar tc = new TaiwanCalendar();
         CultureInfo ci = new CultureInfo("zh-TW");
@@ -67,7 +70,8 @@ public partial class HQ_TeamReserveChange : System.Web.UI.Page
         {
             allow = Lib.SysSetting.getAllowedDates(this.cneterSel.SelectedValue);
             deny = Lib.SysSetting.getDeniedDates(this.cneterSel.SelectedValue);
-            if (e.Day.IsWeekend)
+            //if (e.Day.IsWeekend)
+            if (wk.DicWeek[e.Day.Date.DayOfWeek] == false)//2017-10-25新寫法
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
@@ -79,28 +83,40 @@ public partial class HQ_TeamReserveChange : System.Web.UI.Page
                 }
                 else
                 {
-                    int i = 0;
-                    foreach (KeyValuePair<string, DateTime> s in allow)
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == s.Value)
-                        {
-                            e.Cell.BackColor = System.Drawing.Color.Green;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                    }
-                    if (i == allow.Count)
-                    {
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
                         LiteralControl l = (LiteralControl)e.Cell.Controls[0];
                         e.Cell.Controls.RemoveAt(0);
                         e.Cell.Text = l.Text;
                     }
+                    else
+                    {
+                        int i = 0;
+                        foreach (KeyValuePair<string, DateTime> s in allow)
+                        {
+                            if (e.Day.Date == s.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Green;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                            }
+                            else
+                            {
+                                i++;
+                            }
+                        }
+                        if (i == allow.Count)
+                        {
+                            LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                            e.Cell.Controls.RemoveAt(0);
+                            e.Cell.Text = l.Text;
+                        }
+                    }
                 }
             }
-            if (!e.Day.IsWeekend)
+            //if (!e.Day.IsWeekend)
+            if (wk.DicWeek[e.Day.Date.DayOfWeek] == true)//2017-10-25新寫法
             {
                 DateTime dt = Lib.SysSetting.ToWorldDate(e.Day.Date.ToShortDateString());
                 bool _isOver = Lib.SysSetting.isOverTime(dt);
@@ -112,15 +128,26 @@ public partial class HQ_TeamReserveChange : System.Web.UI.Page
                 }
                 else
                 {
-                    foreach (KeyValuePair<string, DateTime> d in deny)
+                    if (dt.DayOfWeek == DayOfWeek.Friday)
                     {
-                        if (e.Day.Date == d.Value)
+                        e.Cell.BackColor = System.Drawing.Color.Red;
+                        e.Cell.ForeColor = System.Drawing.Color.White;
+                        LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                        e.Cell.Controls.RemoveAt(0);
+                        e.Cell.Text = l.Text;
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, DateTime> d in deny)
                         {
-                            e.Cell.BackColor = System.Drawing.Color.Red;
-                            e.Cell.ForeColor = System.Drawing.Color.White;
-                            LiteralControl l = (LiteralControl)e.Cell.Controls[0];
-                            e.Cell.Controls.RemoveAt(0);
-                            e.Cell.Text = l.Text;
+                            if (e.Day.Date == d.Value)
+                            {
+                                e.Cell.BackColor = System.Drawing.Color.Red;
+                                e.Cell.ForeColor = System.Drawing.Color.White;
+                                LiteralControl l = (LiteralControl)e.Cell.Controls[0];
+                                e.Cell.Controls.RemoveAt(0);
+                                e.Cell.Text = l.Text;
+                            }
                         }
                     }
                 }
@@ -164,104 +191,113 @@ public partial class HQ_TeamReserveChange : System.Web.UI.Page
             {
                 if (Lib.SysSetting.CheckYear(Lib.SysSetting.ToWorldDate(_selectdate)))
                 {
-                    CultureInfo ci_en = new CultureInfo("en-US");
-                    Thread.CurrentThread.CurrentCulture = ci_en;
-                    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainDB"].ConnectionString);
-                    conn.Open();
-                    SqlCommand comm = conn.CreateCommand();
-                    SqlTransaction trans;
-                    trans = conn.BeginTransaction("mytrans");
-                    comm.Connection = conn;
-                    comm.Transaction = trans;
-                    DataTable dt = new DataTable();
-                    try
+                    DateTime checkDay = Lib.SysSetting.ToWorldDate(_selectdate);
+                    if (checkDay.DayOfWeek == DayOfWeek.Friday || checkDay.DayOfWeek == DayOfWeek.Saturday || checkDay.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        comm.Parameters.Clear();
-                        SqlParameter p1 = new SqlParameter("date", Convert.ToDateTime(Request.QueryString["date"].ToString().Trim()));
-                        SqlParameter p2 = new SqlParameter("center_code", Request.QueryString["center_code"].ToString().Trim());
-                        SqlParameter p3 = new SqlParameter("op_id", ((Lib.Account)Session["account"]).AccountName);
-                        comm.Parameters.Add(p1);
-                        comm.Parameters.Add(p2);
-                        comm.Parameters.Add(p3);
-                        comm.CommandType = CommandType.Text;
-                        comm.CommandText = "select sid,birth from Result where date = @date and center_code = @center_code and op_id = @op_id and status = '000'";
-                        dt.Load(comm.ExecuteReader());
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('星期五、六、日預設關站日，無法報進!!');", true);
+                    }
+                    else
+                    {
+                        CultureInfo ci_en = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentCulture = ci_en;
+                        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["MainDB"].ConnectionString);
+                        conn.Open();
+                        SqlCommand comm = conn.CreateCommand();
+                        SqlTransaction trans;
+                        trans = conn.BeginTransaction("mytrans");
+                        comm.Connection = conn;
+                        comm.Transaction = trans;
+                        DataTable dt = new DataTable();
+                        try
                         {
                             comm.Parameters.Clear();
-                            comm.Parameters.Add("age", Lib.SysSetting.ConvertAge(Convert.ToDateTime(dt.Rows[i]["birth"]), Lib.SysSetting.ToWorldDate(_selectdate)));
-                            comm.Parameters.Add("date", Lib.SysSetting.ToWorldDate(_selectdate));
-                            comm.Parameters.Add("center_code", cneterSel.SelectedValue.ToString());
-                            comm.Parameters.Add("op_id", ((Lib.Account)Session["account"]).AccountName);
-                            comm.Parameters.Add("sid", dt.Rows[i]["sid"].ToString());
+                            SqlParameter p1 = new SqlParameter("date", Convert.ToDateTime(Request.QueryString["date"].ToString().Trim()));
+                            SqlParameter p2 = new SqlParameter("center_code", Request.QueryString["center_code"].ToString().Trim());
+                            SqlParameter p3 = new SqlParameter("op_id", ((Lib.Account)Session["account"]).AccountName);
+                            comm.Parameters.Add(p1);
+                            comm.Parameters.Add(p2);
+                            comm.Parameters.Add(p3);
                             comm.CommandType = CommandType.Text;
-                            comm.CommandText = "UPDATE Result SET age = @age, date = @date, center_code = @center_code where sid = @sid and op_id = @op_id ";
-                            comm.ExecuteNonQuery();
+                            comm.CommandText = "select sid,birth from Result where date = @date and center_code = @center_code and op_id = @op_id and status = '000'";
+                            dt.Load(comm.ExecuteReader());
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                comm.Parameters.Clear();
+                                comm.Parameters.Add("age", Lib.SysSetting.ConvertAge(Convert.ToDateTime(dt.Rows[i]["birth"]), Lib.SysSetting.ToWorldDate(_selectdate)));
+                                comm.Parameters.Add("date", Lib.SysSetting.ToWorldDate(_selectdate));
+                                comm.Parameters.Add("center_code", cneterSel.SelectedValue.ToString());
+                                comm.Parameters.Add("op_id", ((Lib.Account)Session["account"]).AccountName);
+                                comm.Parameters.Add("sid", dt.Rows[i]["sid"].ToString());
+                                comm.CommandType = CommandType.Text;
+                                comm.CommandText = "UPDATE Result SET age = @age, date = @date, center_code = @center_code where sid = @sid and op_id = @op_id ";
+                                comm.ExecuteNonQuery();
+                            }
+                            DataTable dt_reserved = new DataTable();
+                            comm.Parameters.Clear();
+                            comm.Parameters.Add("center_code", cneterSel.SelectedValue.ToString());
+                            comm.Parameters.Add("date", Lib.SysSetting.ToWorldDate(_selectdate));
+                            comm.CommandType = CommandType.StoredProcedure;
+                            comm.CommandText = "Ex102_GetCenterLimit";
+                            dt_reserved.Load(comm.ExecuteReader());
+                            //comm.CommandText = "select count (id) as reserved,(select limit from center where center_code = @center_code) as limit from result where center_code = @center_code and date = @date";
+                            //dt_reserved.Load(comm.ExecuteReader());
+                            //if (((Convert.ToInt32(dt_reserved.Rows[0]["limit"].ToString()) - Convert.ToInt32(dt_reserved.Rows[0]["reserved"].ToString())) >= 0))
+                            if (Convert.ToInt32(dt_reserved.Rows[0]["allow"]) >= 0)
+                            {
+                                //if ((Convert.ToInt32(oldcount.Text) <= (Convert.ToInt32(dt_reserved.Rows[0]["limit"].ToString()) - Convert.ToInt32(dt_reserved.Rows[0]["reserved"].ToString()))))
+                                trans.Commit();
+                                newcenter.Text = cneterSel.SelectedItem.Text;
+                                newcount.Text = oldcount.Text;
+                                newdate.Text = _selectdate;
+                                this.Result.Style.Value = "";
+                                this.ReturnStep1.Style.Value = "";
+                                this.OrderStep1.Style.Value = "display:none";
+                                this.SureTimeAndPlace.Style.Value = "display:none";
+                                this.Div1.Style.Value = "display:none";
+                                this.Nonenough.Style.Value = "display:none";
+                                this.ConnectError.Style.Value = "display:none";
+                                this.onlylater.Style.Value = "display:none";
+                                string dd = Server.MapPath(Request.ApplicationPath);
+                                MailMessage _Mail = new MailMessage();
+                                StreamReader _MailContent = new StreamReader(dd + "\\Mail\\UpdateTeamReserveManger.txt");
+                                _Mail.Body = _MailContent.ReadToEnd();
+                                _Mail.Body = _Mail.Body.Replace("%olddate%", olddate.Text);
+                                _Mail.Body = _Mail.Body.Replace("%oldlocation%", oldcenter.Text);
+                                _Mail.Body = _Mail.Body.Replace("%newdate%", newdate.Text);
+                                _Mail.Body = _Mail.Body.Replace("%newlocation%", newcenter.Text);
+                                _Mail.Body = _Mail.Body.Replace("%total%", newcount.Text);
+                                Lib.SysSetting.SaveLetter(((Lib.Account)Session["account"]).Mail + "@webmail.mil.tw", "國軍基本體能鑑測網", _Mail.Body, "報進變更通知信", "00");
+                                Lib.SysSetting.AddLog("團體變更報進", ((Lib.Account)Session["account"]).AccountName, "變更報進 , 日期:" + newdate.Text + " , 地點:" + newcenter.Text + " , 預約人數" + newcount.Text + "人", System.DateTime.Now);
+
+                                //Lib.SysSetting.SaveLetter(((Lib.Account)Session["account"]).Mail + "@webmail.mil.tw", "國軍基本體能鑑測網", _Mail.Body, "報進成功通知信", "00");
+                            }
+                            else
+                            {
+                                trans.Rollback();
+                                this.Nonenough.Style.Value = "";
+                                this.Div1.Style.Value = "display:none";
+                                this.ConnectError.Style.Value = "display:none";
+                                this.onlylater.Style.Value = "display:none";
+                                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('餘額不足 , 無法預約');", true);
+                            }
                         }
-                        DataTable dt_reserved = new DataTable();
-                        comm.Parameters.Clear();
-                        comm.Parameters.Add("center_code", cneterSel.SelectedValue.ToString());
-                        comm.Parameters.Add("date", Lib.SysSetting.ToWorldDate(_selectdate));
-                        comm.CommandType = CommandType.StoredProcedure;
-                        comm.CommandText = "Ex102_GetCenterLimit";
-                        dt_reserved.Load(comm.ExecuteReader());
-                        //comm.CommandText = "select count (id) as reserved,(select limit from center where center_code = @center_code) as limit from result where center_code = @center_code and date = @date";
-                        //dt_reserved.Load(comm.ExecuteReader());
-                        //if (((Convert.ToInt32(dt_reserved.Rows[0]["limit"].ToString()) - Convert.ToInt32(dt_reserved.Rows[0]["reserved"].ToString())) >= 0))
-                        if (Convert.ToInt32(dt_reserved.Rows[0]["allow"]) >= 0)
+                        catch (Exception ex)
                         {
-                            //if ((Convert.ToInt32(oldcount.Text) <= (Convert.ToInt32(dt_reserved.Rows[0]["limit"].ToString()) - Convert.ToInt32(dt_reserved.Rows[0]["reserved"].ToString()))))
-                            trans.Commit();
-                            newcenter.Text = cneterSel.SelectedItem.Text;
-                            newcount.Text = oldcount.Text;
-                            newdate.Text = _selectdate;
-                            this.Result.Style.Value = "";
-                            this.ReturnStep1.Style.Value = "";
-                            this.OrderStep1.Style.Value = "display:none";
-                            this.SureTimeAndPlace.Style.Value = "display:none";
-                            this.Div1.Style.Value = "display:none";
+                            Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
+                            trans.Rollback();
+                            this.Div1.Style.Value = "";
                             this.Nonenough.Style.Value = "display:none";
                             this.ConnectError.Style.Value = "display:none";
                             this.onlylater.Style.Value = "display:none";
-                            string dd = Server.MapPath(Request.ApplicationPath);
-                            MailMessage _Mail = new MailMessage();
-                            StreamReader _MailContent = new StreamReader(dd + "\\Mail\\UpdateTeamReserveManger.txt");
-                            _Mail.Body = _MailContent.ReadToEnd();
-                            _Mail.Body = _Mail.Body.Replace("%olddate%", olddate.Text);
-                            _Mail.Body = _Mail.Body.Replace("%oldlocation%", oldcenter.Text);
-                            _Mail.Body = _Mail.Body.Replace("%newdate%", newdate.Text);
-                            _Mail.Body = _Mail.Body.Replace("%newlocation%", newcenter.Text);
-                            _Mail.Body = _Mail.Body.Replace("%total%", newcount.Text);
-                            Lib.SysSetting.SaveLetter(((Lib.Account)Session["account"]).Mail + "@webmail.mil.tw", "國軍基本體能鑑測網", _Mail.Body, "報進變更通知信", "00");
-                            Lib.SysSetting.AddLog("團體變更報進", ((Lib.Account)Session["account"]).AccountName, "變更報進 , 日期:" + newdate.Text + " , 地點:" + newcenter.Text + " , 預約人數" + newcount.Text + "人", System.DateTime.Now);
-
-                            //Lib.SysSetting.SaveLetter(((Lib.Account)Session["account"]).Mail + "@webmail.mil.tw", "國軍基本體能鑑測網", _Mail.Body, "報進成功通知信", "00");
+                            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('網路連線異常 , 請重新作業');", true);
                         }
-                        else
+                        finally
                         {
-                            trans.Rollback();
-                            this.Nonenough.Style.Value = "";
-                            this.Div1.Style.Value = "display:none";
-                            this.ConnectError.Style.Value = "display:none";
-                            this.onlylater.Style.Value = "display:none";
-                            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('餘額不足 , 無法預約');", true);
+                            trans.Dispose();
+                            conn.Close();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Lib.SysSetting.ExceptionLog(ex.GetType().ToString(), ex.Message, this.ToString());
-                        trans.Rollback();
-                        this.Div1.Style.Value = "";
-                        this.Nonenough.Style.Value = "display:none";
-                        this.ConnectError.Style.Value = "display:none";
-                        this.onlylater.Style.Value = "display:none";
-                        //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", "alert('網路連線異常 , 請重新作業');", true);
-                    }
-                    finally
-                    {
-                        trans.Dispose();
-                        conn.Close();
-                    }
+                        
                 }
                 else
                 {

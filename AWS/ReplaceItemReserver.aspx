@@ -30,34 +30,21 @@
             var _center_code = $('select option:selected').val();
             var _date = $(':text').val();
             if (_center_code != "0" && _date != "") {
-                //檢查星期，1~6代表一~六，0=日
-                var arrdate = _date.split('/');
-                var year = parseInt(arrdate[0]) + 1911;
-                var month = arrdate[1];
-                var day = arrdate[2];
-                var newdate = year + '/' + month + '/' + day;
-                var checkday = new Date(newdate).getDay();
-                if (checkday == 5 || checkday == 6 || checkday == 0) {
-                    $('#checkLimit').next().html('星期五、六、日預設關站');
-                }
-                else {
-                    $.postJson('GetValueByCode.ashx', { mode: "centerLimit", center_code: _center_code, date: _date }, function (d, s) {
-                        if (s == "success") {
-                            $('#checkLimit').next().html('當日剩餘員額 : ');
-                            $('#checkLimit').next().next().html(d["status"]);
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Div2").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Nonenough").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_bereserve").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_beok").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_noreserve").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_ConnectError").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_againreserve").style.display = "none";
-                            document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_canreserve").style.display = "none";
-                            //alert();
-                        }
-                    });
-                }
-                
+                $.postJson('GetValueByCode.ashx', { mode: "centerLimit", center_code: _center_code, date: _date }, function(d, s) {
+                    if (s == "success") {
+                        $('#checkLimit').next().html('當日剩餘員額 : ');
+                        $('#checkLimit').next().next().html(d["status"]);
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Div2").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_Nonenough").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_bereserve").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_beok").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_noreserve").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_ConnectError").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_againreserve").style.display = "none";
+                        document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_canreserve").style.display = "none";
+                        //alert();
+                    }
+                });
             }
             else {
                 $('#checkLimit').next().html('請選擇鑑測站與日期');
@@ -73,29 +60,7 @@
             }
         });
     });
-    function checkDay() {
-        var result = false;
-        var _date = document.getElementById("ctl00_ContentPlaceHolder1_TabContainer1_TabPanel_selectDate").value;
-        if (_date != "") {
-            //檢查星期，1~6代表一~六，0=日
-            var arrdate = _date.split('/');
-            var year = parseInt(arrdate[0]) + 1911;
-            var month = arrdate[1];
-            var day = arrdate[2];
-            var newdate = year + '/' + month + '/' + day;
-            var checkday = new Date(newdate).getDay();
-            if (checkday == 5 || checkday == 6 || checkday == 0) {
-                alert('星期五、六、日預設關站日，無法報進!!');
-            }
-            else {
-                result = true;
-            }
-        }
-        else {
-            alert("請選擇日期!!");
-        }
-        return result;
-    }
+   
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -183,7 +148,7 @@
         <tr>
             <td>
             <IMG src="images/dot.gif" width=100 height=10>&nbsp;&nbsp;&nbsp;</td><td align="right">
-            <asp:Button ID="Button1" runat="server" Text="開始報進" CssClass="buttom_main" OnClientClick="return checkDay()" onclick="Button1_Click" /></td>
+            <asp:Button ID="Button1" runat="server" Text="開始報進" CssClass="buttom_main" onclick="Button1_Click" /></td>
         </tr>
      </table>
 </div>

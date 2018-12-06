@@ -291,7 +291,7 @@ namespace ScoreClose
                     }
                     else
                     {
-                        MessageBox.Show("依條件查詢 , 取得成績為" + dt.Rows.Count.ToString() + "筆, 此為異常情況請洽鑑測官");
+                        MessageBox.Show("該晶片今日已使用" + dt.Rows.Count.ToString() + "次, 請改用「身份證字號」或「背號」查詢!!");
                     }
                     ClearText();
                 }
